@@ -1,19 +1,25 @@
 package ru.mirea.ivashechkinav.alarmclock
 
+import android.media.RingtoneManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentTimePickerBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.AlarmService
+import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TimePickerFragment : Fragment() {
 
+    @Inject
+    lateinit var alarmService: AlarmServiceImpl
     private lateinit var binding: FragmentTimePickerBinding
-    private lateinit var alarmService: AlarmService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,7 +27,6 @@ class TimePickerFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTimePickerBinding.inflate(inflater, container, false)
-        alarmService = AlarmServiceImpl(appContext = requireActivity().applicationContext)
 
         // Устанавливаем значения для NumberPicker для часов и минут
         val hours = (0..23).map { String.format("%02d", it) }.toTypedArray()
@@ -45,6 +50,13 @@ class TimePickerFragment : Fragment() {
             c.set(Calendar.MINUTE, binding.minutePicker.value)
             c.set(Calendar.SECOND, 0)
             getTime()
+
+            AlarmUi(
+                name = binding.etAlarmName.text.toString(),
+                alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
+                invokeTimestamp = c.timeInMillis,
+                daysOfWeek = EnumSet.noneOf(DaysOfWeek::class.java)
+            )
             alarmService.setAlarm(c.timeInMillis)
         }
         binding.btnCancel.setOnClickListener {

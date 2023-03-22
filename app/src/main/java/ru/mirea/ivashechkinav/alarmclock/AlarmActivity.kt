@@ -4,8 +4,10 @@ import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import ru.mirea.ivashechkinav.alarmclock.databinding.ActivityAlarmBinding
 
+@AndroidEntryPoint
 class AlarmActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAlarmBinding
