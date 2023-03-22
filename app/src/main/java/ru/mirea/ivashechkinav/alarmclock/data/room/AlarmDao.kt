@@ -11,8 +11,11 @@ interface AlarmDao {
     fun getPagingSource(): PagingSource<Int, AlarmRoom>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(alarmRoom: AlarmRoom)
+    suspend fun save(alarmRoom: AlarmRoom): Long
 
     @Delete
     suspend fun delete(alarmRoom: AlarmRoom)
+
+    @Query("DELETE FROM alarms WHERE id = :alarmId")
+    suspend fun deleteById(alarmId: Long)
 }

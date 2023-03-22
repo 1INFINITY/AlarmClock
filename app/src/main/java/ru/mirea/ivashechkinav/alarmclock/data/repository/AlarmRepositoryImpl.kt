@@ -15,10 +15,14 @@ class AlarmRepositoryImpl @Inject constructor(
 ) : AlarmRepository {
 
     override suspend fun saveAlarm(alarm: Alarm) = withContext(Dispatchers.IO) {
-        alarmDao.save(alarm as AlarmRoom)
+        alarmDao.save(AlarmRoom(alarm))
     }
 
     override suspend fun deleteAlarm(alarm: Alarm) = withContext(Dispatchers.IO) {
-        alarmDao.delete(alarm as AlarmRoom)
+        alarmDao.delete(AlarmRoom(alarm))
+    }
+
+    override suspend fun deleteAlarmById(alarmId: Long) = withContext(Dispatchers.IO) {
+        alarmDao.deleteById(alarmId)
     }
 }

@@ -51,13 +51,13 @@ class TimePickerFragment : Fragment() {
             c.set(Calendar.SECOND, 0)
             getTime()
 
-            AlarmUi(
+            val alarm = AlarmUi(
                 name = binding.etAlarmName.text.toString(),
                 alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
                 invokeTimestamp = c.timeInMillis,
                 daysOfWeek = EnumSet.noneOf(DaysOfWeek::class.java)
             )
-            alarmService.setAlarm(c.timeInMillis)
+            alarmService.setAlarm(alarm)
         }
         binding.btnCancel.setOnClickListener {
             alarmService.stopAlarm(1)

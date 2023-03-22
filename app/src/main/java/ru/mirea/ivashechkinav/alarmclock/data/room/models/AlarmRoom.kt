@@ -19,10 +19,10 @@ data class AlarmRoom(
     override val daysOfWeek: EnumSet<DaysOfWeek>,
 ) : Alarm {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long? = null
 
     override val requestCode: Int
-        get() = id!!
+        get() = id!!.toInt()
 
     constructor(alarm: Alarm) : this(
         name = alarm.name,

@@ -4,12 +4,18 @@ import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.ActivityAlarmBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlarmActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var repositoryImpl: AlarmRepositoryImpl
     lateinit var binding: ActivityAlarmBinding
     lateinit var ringtone: Ringtone
 
@@ -17,6 +23,10 @@ class AlarmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val requestCode: Long = intent.extras!!.getLong("requestCode")
+        lifecycleScope.launchWhenStarted {
+            repositoryImpl.deleteAlarmById(requestCode)
+        }
         playRingtone()
     }
 
