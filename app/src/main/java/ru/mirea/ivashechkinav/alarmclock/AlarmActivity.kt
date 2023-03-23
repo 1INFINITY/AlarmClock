@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.ActivityAlarmBinding
+import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -16,6 +17,9 @@ class AlarmActivity : AppCompatActivity() {
 
     @Inject
     lateinit var repositoryImpl: AlarmRepositoryImpl
+    @Inject
+    lateinit var alarmServiceImpl: AlarmServiceImpl
+
     lateinit var binding: ActivityAlarmBinding
     lateinit var ringtone: Ringtone
 
@@ -25,19 +29,21 @@ class AlarmActivity : AppCompatActivity() {
         setContentView(binding.root)
         val requestCode: Long = intent.extras!!.getLong("requestCode")
         lifecycleScope.launchWhenStarted {
-            repositoryImpl.deleteAlarmById(requestCode)
+            val alarm: Alarm = repositoryImpl.getAlarmById(alarmId = requestCode)
+            ringtone = RingtoneManager.getRingtone(this@AlarmActivity, alarm.alarmSoundUri)
+            //repositoryImpl.deleteAlarmById(requestCode)
+            alarmServiceImpl.alarmSwitch(requestCode)
+            //playRingtone()
         }
-        playRingtone()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        stopRingtone()
+        //stopRingtone()
     }
 
     private fun playRingtone() {
-        val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        ringtone = RingtoneManager.getRingtone(this, notification)
+        if (!this::ringtone.isInitialized) throw java.lang.IllegalStateException("Ringtone must be initialized first")
         ringtone.play()
     }
 

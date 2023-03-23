@@ -45,43 +45,43 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/cbMonday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/cbTuesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/cbWednesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/checkBox4"
+                android:id="@+id/cbThursday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/checkBox5"
+                android:id="@+id/cbFriday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/checkBox6"
+                android:id="@+id/cbSaturday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/checkBox7"
+                android:id="@+id/cbSunday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />

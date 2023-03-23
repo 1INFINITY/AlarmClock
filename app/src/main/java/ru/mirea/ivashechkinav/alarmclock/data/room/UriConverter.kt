@@ -6,7 +6,7 @@ import androidx.room.TypeConverter
 class UriConverter {
     @TypeConverter
     fun fromUri(uri: Uri): String {
-        return uri.path!!
+        return uri.toString()
     }
 
     @TypeConverter

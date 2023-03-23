@@ -25,4 +25,8 @@ class AlarmRepositoryImpl @Inject constructor(
     override suspend fun deleteAlarmById(alarmId: Long) = withContext(Dispatchers.IO) {
         alarmDao.deleteById(alarmId)
     }
+
+    override suspend fun getAlarmById(alarmId: Long) = withContext(Dispatchers.IO) {
+        alarmDao.findById(alarmId)
+    }
 }

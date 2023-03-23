@@ -46,7 +46,7 @@ class TimePickerFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             val c = Calendar.getInstance()
-            c.set(Calendar.HOUR_OF_DAY, binding.hourPicker.value)
+            c.set(Calendar.HOUR_OF_DAY, binding.hourPicker.value + 1)
             c.set(Calendar.MINUTE, binding.minutePicker.value)
             c.set(Calendar.SECOND, 0)
             getTime()
@@ -55,7 +55,7 @@ class TimePickerFragment : Fragment() {
                 name = binding.etAlarmName.text.toString(),
                 alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
                 invokeTimestamp = c.timeInMillis,
-                daysOfWeek = EnumSet.noneOf(DaysOfWeek::class.java)
+                daysOfWeek = getDaysOfWeek()
             )
             alarmService.setAlarm(alarm)
         }
@@ -66,6 +66,19 @@ class TimePickerFragment : Fragment() {
     }
 
 
+    fun getDaysOfWeek(): EnumSet<DaysOfWeek> {
+        val set = EnumSet.noneOf(DaysOfWeek::class.java)
+        binding.apply {
+            if(cbMonday.isChecked) set.add(DaysOfWeek.MONDAY)
+            if(cbTuesday.isChecked) set.add(DaysOfWeek.TUESDAY)
+            if(cbWednesday.isChecked) set.add(DaysOfWeek.WEDNESDAY)
+            if(cbThursday.isChecked) set.add(DaysOfWeek.THURSDAY)
+            if(cbFriday.isChecked) set.add(DaysOfWeek.FRIDAY)
+            if(cbSaturday.isChecked) set.add(DaysOfWeek.SATURDAY)
+            if(cbSunday.isChecked) set.add(DaysOfWeek.SUNDAY)
+        }
+        return set
+    }
     fun getTime() {
         // Получаем выбранное время
         val hour = binding.hourPicker.value
