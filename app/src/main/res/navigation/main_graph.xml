@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/alarmsListFragment">
+
+    <fragment
+        android:id="@+id/alarmsListFragment"
+        android:name="ru.mirea.ivashechkinav.alarmclock.AlarmsListFragment"
+        android:label="fragment_alarms_list"
+        tools:layout="@layout/fragment_alarms_list" >
+        <action
+            android:id="@+id/action_alarmsListFragment_to_timePickerFragment"
+            app:destination="@id/timePickerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timePickerFragment"
+        android:name="ru.mirea.ivashechkinav.alarmclock.TimePickerFragment"
+        android:label="fragment_time_picker"
+        tools:layout="@layout/fragment_time_picker" />
+</navigation>

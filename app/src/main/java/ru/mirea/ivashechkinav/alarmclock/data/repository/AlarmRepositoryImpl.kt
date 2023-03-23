@@ -1,6 +1,11 @@
 package ru.mirea.ivashechkinav.alarmclock.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import ru.mirea.ivashechkinav.alarmclock.data.room.AlarmDao
 import ru.mirea.ivashechkinav.alarmclock.data.room.models.AlarmRoom
@@ -13,6 +18,17 @@ import javax.inject.Singleton
 class AlarmRepositoryImpl @Inject constructor(
     private val alarmDao: AlarmDao
 ) : AlarmRepository {
+
+    override fun getAlarms(): Flow<PagingData<Alarm>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { alarmDao.getPagingSource() }
+        ).flow.map { it as PagingData<Alarm> }
+    }
 
     override suspend fun saveAlarm(alarm: Alarm) = withContext(Dispatchers.IO) {
         alarmDao.save(AlarmRoom(alarm))
@@ -32,5 +48,9 @@ class AlarmRepositoryImpl @Inject constructor(
 
     override suspend fun getAlarmById(alarmId: Long) = withContext(Dispatchers.IO) {
         alarmDao.findById(alarmId)
+    }
+
+    companion object {
+        const val PAGE_SIZE = 10
     }
 }

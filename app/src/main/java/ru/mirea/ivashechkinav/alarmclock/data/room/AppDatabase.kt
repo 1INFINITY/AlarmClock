@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import ru.mirea.ivashechkinav.alarmclock.data.room.models.AlarmRoom
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [
         AlarmRoom::class,
     ]

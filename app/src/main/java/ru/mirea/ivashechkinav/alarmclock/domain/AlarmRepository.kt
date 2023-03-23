@@ -1,6 +1,11 @@
 package ru.mirea.ivashechkinav.alarmclock.domain
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+
 interface AlarmRepository {
+
+    fun getAlarms(): Flow<PagingData<Alarm>>
 
     suspend fun saveAlarm(alarm: Alarm): Long
 

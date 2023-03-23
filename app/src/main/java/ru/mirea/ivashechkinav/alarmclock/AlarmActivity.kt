@@ -43,12 +43,12 @@ class AlarmActivity : AppCompatActivity() {
     }
 
     private fun playRingtone() {
-        if (!this::ringtone.isInitialized) throw java.lang.IllegalStateException("Ringtone must be initialized first")
+        if (!this::ringtone.isInitialized) throw IllegalStateException("Ringtone must be initialized first")
         ringtone.play()
     }
 
     private fun stopRingtone() {
-        if (!this::ringtone.isInitialized) throw java.lang.IllegalStateException("Ringtone must be initialized first")
+        if (!this::ringtone.isInitialized) throw IllegalStateException("Ringtone must be initialized first")
 
         if (ringtone.isPlaying)
             ringtone.stop()

@@ -13,21 +13,21 @@ import java.util.*
 
 @Entity(tableName = "alarms")
 data class AlarmRoom(
+    @PrimaryKey(autoGenerate = true)
+    override val id: Long? = null,
     override val name: String,
     override val alarmSoundUri: Uri,
     override val invokeTimestamp: Long,
     override val daysOfWeek: EnumSet<DaysOfWeek>,
+    override val isEnable: Boolean
 ) : Alarm {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long? = null
-
-    override val requestCode: Int
-        get() = id!!.toInt()
 
     constructor(alarm: Alarm) : this(
+        id = alarm.id,
         name = alarm.name,
         alarmSoundUri = alarm.alarmSoundUri,
         invokeTimestamp = alarm.invokeTimestamp,
-        daysOfWeek = alarm.daysOfWeek
+        daysOfWeek = alarm.daysOfWeek,
+        isEnable = alarm.isEnable
     )
 }

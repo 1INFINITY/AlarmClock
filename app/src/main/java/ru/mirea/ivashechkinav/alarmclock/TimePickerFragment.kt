@@ -52,10 +52,12 @@ class TimePickerFragment : Fragment() {
             getTime()
 
             val alarm = AlarmUi(
+                id = null,
                 name = binding.etAlarmName.text.toString(),
                 alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
                 invokeTimestamp = c.timeInMillis,
-                daysOfWeek = getDaysOfWeek()
+                daysOfWeek = getDaysOfWeek(),
+                isEnable = true
             )
             alarmService.setAlarm(alarm)
         }
