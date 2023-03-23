@@ -46,7 +46,7 @@ class TimePickerFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             val c = Calendar.getInstance()
-            c.set(Calendar.HOUR_OF_DAY, binding.hourPicker.value + 1)
+            c.set(Calendar.HOUR_OF_DAY, binding.hourPicker.value)
             c.set(Calendar.MINUTE, binding.minutePicker.value)
             c.set(Calendar.SECOND, 0)
             getTime()

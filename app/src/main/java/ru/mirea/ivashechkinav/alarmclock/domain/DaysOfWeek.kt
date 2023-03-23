@@ -5,13 +5,13 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 enum class DaysOfWeek(val value: Byte) {
-    SUNDAY(0b00000001),
-    MONDAY(0b00000010),
-    TUESDAY(0b00000100),
-    WEDNESDAY(0b00001000),
-    THURSDAY(0b00010000),
-    FRIDAY(0b00100000),
-    SATURDAY(0b01000000);
+    MONDAY(0b00000001),
+    TUESDAY(0b00000010),
+    WEDNESDAY(0b00000100),
+    THURSDAY(0b00001000),
+    FRIDAY(0b00010000),
+    SATURDAY(0b00100000),
+    SUNDAY(0b01000000);
 
     fun has(day: DaysOfWeek): Boolean {
         return value and day.value != 0.toByte()
