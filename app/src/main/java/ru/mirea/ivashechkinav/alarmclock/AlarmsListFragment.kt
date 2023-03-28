@@ -43,7 +43,6 @@ class AlarmsListFragment : Fragment() {
 
         initButtons()
         initRecyclerView()
-        setSpan(DaysOfWeek.fromByte(0b00100110))
         return binding.root
     }
 
@@ -82,89 +81,4 @@ class AlarmsListFragment : Fragment() {
         binding.recyclerViewAlarm.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewAlarm.adapter = adapter
     }
-
-    private fun setSpan(set: EnumSet<DaysOfWeek>) {
-        val spannableString = SpannableString("П В С Ч П С В ")
-        val daysIndexes = set.map { (it.toInt() + 5) % 7 }
-        val span = DotSpan(5f, Color.GREEN, daysIndexes)
-        spannableString.setSpan(
-            span,
-            0,
-            spannableString.length - 1,
-            Spanned.SPAN_INCLUSIVE_INCLUSIVE
-        )
-        binding.textView.text = spannableString
-    }
-
-    class DotSpan(
-        private val radius: Float,
-        private val color: Int,
-        private val daysIndexes: List<Int>
-    ) : ReplacementSpan() {
-
-        override fun getSize(
-            paint: Paint,
-            text: CharSequence,
-            start: Int,
-            end: Int,
-            fm: Paint.FontMetricsInt?
-        ): Int {
-            return paint.measureText(text, start, end).toInt()
-        }
-
-        override fun draw(
-            canvas: Canvas,
-            text: CharSequence,
-            start: Int,
-            end: Int,
-            x: Float,
-            top: Int,
-            y: Int,
-            bottom: Int,
-            paint: Paint
-        ) {
-            // сохраняем текущий цвет и стиль текста
-            val oldColor = paint.color
-            val oldStyle = paint.style
-
-            // устанавливаем цвет и стиль для рисования точек
-            paint.color = color
-            paint.style = Paint.Style.FILL
-
-            // рисуем точки над каждым символом текста
-            for (i in start until end) {
-                // находим координаты центра текущего символа
-                val xPos = x + paint.measureText(
-                    text.substring(
-                        start,
-                        i
-                    )
-                ) + paint.measureText(text.substring(i, i + 1)) / 2
-                val yPos = top - radius
-
-                paint.color = Color.GRAY
-                // рисуем круг
-                if (!Character.isWhitespace(text[i]) && daysIndexes.contains(i / 2)) {
-                    paint.color = color
-                    canvas.drawCircle(xPos, yPos, radius, paint)
-                }
-
-
-                // рисуем символы
-                canvas.drawText(
-                    text,
-                    i,
-                    i + 1,
-                    xPos - paint.measureText(text.substring(i, i + 1)) / 2,
-                    y.toFloat(),
-                    paint
-                )
-            }
-
-            // восстанавливаем цвет и стиль текста
-            paint.color = oldColor
-            paint.style = oldStyle
-        }
-    }
-
 }
