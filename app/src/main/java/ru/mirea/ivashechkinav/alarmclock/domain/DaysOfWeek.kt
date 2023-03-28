@@ -35,8 +35,8 @@ enum class DaysOfWeek(val value: Byte) {
         }
 
         @JvmStatic
-        fun toInt(day: DaysOfWeek): Int {
-            return when (day) {
+        fun DaysOfWeek.toInt(): Int {
+            return when (this) {
                 SUNDAY -> 1
                 MONDAY -> 2
                 TUESDAY -> 3

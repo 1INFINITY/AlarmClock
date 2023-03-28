@@ -13,6 +13,7 @@ import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.AlarmRepository
 import ru.mirea.ivashechkinav.alarmclock.domain.AlarmService
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
+import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek.Companion.toInt
 import java.text.SimpleDateFormat
 import java.time.MonthDay
 import java.util.*
@@ -84,9 +85,9 @@ class AlarmServiceImpl @Inject constructor(
         val nextDay = alarm.daysOfWeek.find {
             it.value > currentDayName.value
         }
-            ?.let { DaysOfWeek.toInt(it) }
+            ?.let { it.toInt() }
         if (nextDay == null) {
-            val firstDayInSet = DaysOfWeek.toInt(alarm.daysOfWeek.first())
+            val firstDayInSet = alarm.daysOfWeek.first().toInt()
             calendar.set(Calendar.DAY_OF_WEEK, firstDayInSet)
             calendar.timeInMillis += 7 * 24 * 3600 * 1000
             return (alarm as AlarmUi).copy(invokeTimestamp = calendar.timeInMillis)
