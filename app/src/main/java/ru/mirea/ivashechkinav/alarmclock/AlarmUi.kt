@@ -2,10 +2,13 @@ package ru.mirea.ivashechkinav.alarmclock
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.text.SpannableString
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
+import ru.mirea.ivashechkinav.alarmclock.domain.usecase.GetSpannableDaysStringUseCase
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 data class AlarmUi(
     override val id: Long?,
@@ -15,10 +18,12 @@ data class AlarmUi(
     override val daysOfWeek: EnumSet<DaysOfWeek>,
     override val isEnable: Boolean,
 ) : Alarm {
+    val getSpannableUseCase = GetSpannableDaysStringUseCase()
+
     val timeInvoke: String
         get() = parseTime()
-    val dayInvoke: String
-        get() = parseDay()
+    val dayInvoke: SpannableString
+        get() = getSpannableUseCase.execute(daysOfWeek) ?: parseDay()
 
     constructor(alarm: Alarm) : this(
         id = alarm.id,
@@ -35,9 +40,9 @@ data class AlarmUi(
         return formatter.format(date)
     }
 
-    private fun parseDay(): String {
+    private fun parseDay(): SpannableString {
         val date = Date(invokeTimestamp)
         val formatter = SimpleDateFormat("EE, dd MMM", Locale("ru", "RU"))
-        return formatter.format(date)
+        return SpannableString(formatter.format(date))
     }
 }

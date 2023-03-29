@@ -38,10 +38,6 @@ class AlarmServiceImpl @Inject constructor(
     override fun setAlarm(alarm: Alarm) {
         GlobalScope.launch {
             val calendar = Calendar.getInstance()
-            if (alarm.daysOfWeek.isEmpty())
-                alarm.daysOfWeek.add(
-                    DaysOfWeek.fromInt(calendar.get(Calendar.DAY_OF_WEEK))
-                )
             var editedAlarm = findNearestAlarm(calendar = calendar, alarm = alarm)
             log(editedAlarm)
             val alarmRequestCode = repository.saveAlarm(editedAlarm)
@@ -75,19 +71,20 @@ class AlarmServiceImpl @Inject constructor(
 
     }
     private fun findNearestAlarm(calendar: Calendar, alarm: Alarm): Alarm {
-        if (alarm.daysOfWeek.isEmpty()) throw IllegalArgumentException("Alarms daysOfWeek must have at least 1 element")
+        var daysSet = alarm.daysOfWeek
+        if (daysSet.isEmpty()) daysSet = DaysOfWeek.fromByte(0b01111111)
 
         val currentDay = calendar.get(Calendar.DAY_OF_WEEK)
         val currentDayName = DaysOfWeek.fromInt(currentDay)
-        if (alarm.daysOfWeek.contains(currentDayName) && alarm.invokeTimestamp > calendar.timeInMillis) {
+        if (daysSet.contains(currentDayName) && alarm.invokeTimestamp > calendar.timeInMillis) {
             return alarm
         }
-        val nextDay = alarm.daysOfWeek.find {
+        val nextDay = daysSet.find {
             it.value > currentDayName.value
         }
             ?.let { it.toInt() }
         if (nextDay == null) {
-            val firstDayInSet = alarm.daysOfWeek.first().toInt()
+            val firstDayInSet = daysSet.first().toInt()
             calendar.set(Calendar.DAY_OF_WEEK, firstDayInSet)
             calendar.timeInMillis += 7 * 24 * 3600 * 1000
             return (alarm as AlarmUi).copy(invokeTimestamp = calendar.timeInMillis)

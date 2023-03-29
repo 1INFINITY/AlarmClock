@@ -1,45 +1,30 @@
-package ru.mirea.ivashechkinav.alarmclock.view
+package ru.mirea.ivashechkinav.alarmclock.domain.usecase
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ReplacementSpan
-import android.util.AttributeSet
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek.Companion.toInt
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SelectedDaysTextView(
-    context: Context,
-    attrs: AttributeSet? = null,
-    private val daysSet: EnumSet<DaysOfWeek>
-) : androidx.appcompat.widget.AppCompatTextView(context, attrs) {
+@Singleton
+class GetSpannableDaysStringUseCase @Inject constructor() :
+    UseCase<EnumSet<DaysOfWeek>, SpannableString?> {
+    override fun execute(arg: EnumSet<DaysOfWeek>): SpannableString? {
+        if (arg.size == daysInWeek)
+            return SpannableString(everyday)
+        if (arg.isNotEmpty())
+            return getSpannableString(arg)
 
-    constructor(context: Context) : this(context, null, DaysOfWeek.fromByte(0b00000001))
-
-    constructor(context: Context, attrs: AttributeSet?) : this(
-        context,
-        attrs,
-        DaysOfWeek.fromByte(0b00000001)
-    )
-
-    private val customPaint = Paint()
-
-    init {
-        customPaint.color = Color.RED
-        this.text = daysString
+        return null
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-        setSpan(daysSet)
-    }
-
-    private fun setSpan(set: EnumSet<DaysOfWeek>) {
+    private fun getSpannableString(set: EnumSet<DaysOfWeek>): SpannableString {
         val spannableString = SpannableString(daysString)
         val daysIndexes = set.map { (it.toInt() + 5) % 7 }
         val span = DotSpan(5f, Color.GREEN, daysIndexes)
@@ -49,11 +34,13 @@ class SelectedDaysTextView(
             spannableString.length - 1,
             Spanned.SPAN_INCLUSIVE_INCLUSIVE
         )
-        this.text = spannableString
+        return spannableString
     }
 
     companion object {
         private const val daysString = "П В С Ч П С В "
+        private const val everyday = "Ежедневно"
+        private const val daysInWeek = 7
 
         private class DotSpan(
             private val radius: Float,
@@ -126,5 +113,4 @@ class SelectedDaysTextView(
             }
         }
     }
-
 }
