@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
@@ -45,24 +46,30 @@ class AlarmsListFragment : Fragment() {
     ): View? {
         binding = FragmentAlarmsListBinding.inflate(inflater, container, false)
 
-        setHeader()
+        initHeader()
         initButtons()
         initRecyclerView()
         return binding.root
     }
 
-    private fun setHeader() {
-        val currentTimestamp = Calendar.getInstance().timeInMillis
+    private fun initHeader() {
         lifecycleScope.launchWhenStarted {
-            val result = getNextMinInvokeAlarmTimeUseCase.execute(currentTimestamp)
-            if (result == null) {
-                binding.tvAlarmsState.text = "Следующего будильника нет"
-                binding.tvAlarmsStateTime.text = ""
-                return@launchWhenStarted
+            repeat(Int.MAX_VALUE) {
+                updateHeaderState()
+                delay(60 * 1000)
             }
-            binding.tvAlarmsState.text = "Будильник через\n${result.nextTime}"
-            binding.tvAlarmsStateTime.text = result.nextDate
         }
+    }
+    private suspend fun updateHeaderState() {
+        val currentTimestamp = Calendar.getInstance().timeInMillis
+        val result = getNextMinInvokeAlarmTimeUseCase.execute(currentTimestamp)
+        if (result == null) {
+            binding.tvAlarmsState.text = "Следующего будильника нет"
+            binding.tvAlarmsStateTime.text = ""
+            return
+        }
+        binding.tvAlarmsState.text = "Будильник через\n${result.nextTime}"
+        binding.tvAlarmsStateTime.text = result.nextDate
     }
     private fun initButtons() {
         binding.btnAdd.setOnClickListener {
