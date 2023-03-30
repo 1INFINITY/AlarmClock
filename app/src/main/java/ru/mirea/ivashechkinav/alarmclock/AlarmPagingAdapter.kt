@@ -13,7 +13,14 @@ class AlarmPagingAdapter(
     private val listener: Listener
 ): PagingDataAdapter<AlarmUi, AlarmPagingAdapter.AlarmHolder>(ItemCallback), View.OnClickListener {
 
-
+    private var selectedPosition = RecyclerView.NO_POSITION
+    fun setSelectedPosition(position: Int) {
+        if (selectedPosition != position) {
+            notifyItemChanged(selectedPosition)
+            selectedPosition = position
+            notifyItemChanged(selectedPosition)
+        }
+    }
     interface Listener {
         fun onChooseAlarm(alarm: Alarm)
         fun onToggleSwitch(alarm: Alarm)
@@ -25,10 +32,11 @@ class AlarmPagingAdapter(
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onClick(v: View) {
-        val alarm = v.tag as Alarm
+        val alarmPos = v.tag as Int
+        val alarm = getItem(alarmPos) ?: return
         when (v.id) {
             R.id.swAlarm -> listener.onToggleSwitch(alarm)
-            else -> listener.onChooseAlarm(alarm)
+            else -> setSelectedPosition(alarmPos)
         }
     }
 
@@ -48,16 +56,20 @@ class AlarmPagingAdapter(
     override fun onBindViewHolder(holder: AlarmHolder, position: Int) {
         val alarm = getItem(position) ?: return
         with(holder.binding) {
-            root.tag = alarm
-            swAlarm.tag = alarm
+            root.tag = position
+            swAlarm.tag = position
 
             tvAlarmName.text = alarm.name
             tvTime.text = alarm.timeInvoke
             tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
+            tvExpandedInfo.text = alarm.timeInvoke
+            if(selectedPosition == position)
+                expandableLayout.visibility = View.VISIBLE
+            else
+                expandableLayout.visibility = View.GONE
         }
     }
-
     object ItemCallback : DiffUtil.ItemCallback<AlarmUi>() {
         override fun areItemsTheSame(oldItem: AlarmUi, newItem: AlarmUi): Boolean {
             return oldItem.id == newItem.id
