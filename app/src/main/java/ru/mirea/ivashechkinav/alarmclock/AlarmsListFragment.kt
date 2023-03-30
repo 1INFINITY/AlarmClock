@@ -21,6 +21,7 @@ import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek.Companion.toInt
+import ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime.GetNextMinInvokeAlarmTimeUseCase
 import java.util.*
 import javax.inject.Inject
 
@@ -33,6 +34,9 @@ class AlarmsListFragment : Fragment() {
     @Inject
     lateinit var alarmServiceImpl: AlarmServiceImpl
 
+    @Inject
+    lateinit var getNextMinInvokeAlarmTimeUseCase: GetNextMinInvokeAlarmTimeUseCase
+
     lateinit var binding: FragmentAlarmsListBinding
     lateinit var adapter: AlarmPagingAdapter
     override fun onCreateView(
@@ -41,11 +45,25 @@ class AlarmsListFragment : Fragment() {
     ): View? {
         binding = FragmentAlarmsListBinding.inflate(inflater, container, false)
 
+        setHeader()
         initButtons()
         initRecyclerView()
         return binding.root
     }
 
+    private fun setHeader() {
+        val currentTimestamp = Calendar.getInstance().timeInMillis
+        lifecycleScope.launchWhenStarted {
+            val result = getNextMinInvokeAlarmTimeUseCase.execute(currentTimestamp)
+            if (result == null) {
+                binding.tvAlarmsState.text = "Следующего будильника нет"
+                binding.tvAlarmsStateTime.text = ""
+                return@launchWhenStarted
+            }
+            binding.tvAlarmsState.text = "Будильник через\n${result.nextTime}"
+            binding.tvAlarmsStateTime.text = result.nextDate
+        }
+    }
     private fun initButtons() {
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_alarmsListFragment_to_timePickerFragment)

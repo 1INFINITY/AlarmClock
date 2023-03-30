@@ -16,4 +16,6 @@ interface AlarmRepository {
     suspend fun deleteAlarmById(alarmId: Long)
 
     suspend fun getAlarmById(alarmId: Long): Alarm
+
+    suspend fun getNextMinTimestamp(currentTimestamp: Long): Long?
 }

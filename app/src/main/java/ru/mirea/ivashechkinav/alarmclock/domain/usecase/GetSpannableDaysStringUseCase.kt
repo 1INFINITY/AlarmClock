@@ -12,7 +12,6 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class GetSpannableDaysStringUseCase @Inject constructor() :
     UseCase<EnumSet<DaysOfWeek>, SpannableString?> {
     override fun execute(arg: EnumSet<DaysOfWeek>): SpannableString? {

@@ -36,7 +36,7 @@ data class AlarmUi(
 
     private fun parseTime(): String {
         val date = Date(invokeTimestamp)
-        val formatter = SimpleDateFormat("hh:mm", Locale("ru", "RU"))
+        val formatter = SimpleDateFormat("HH:mm", Locale("ru", "RU"))
         return formatter.format(date)
     }
 

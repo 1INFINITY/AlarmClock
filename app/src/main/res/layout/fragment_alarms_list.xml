@@ -8,30 +8,51 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageButton
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/round_add_24"
-        app:layout_constraintEnd_toStartOf="@+id/btnMenu"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/btnMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/round_menu_24"
+    <TextView
+        android:id="@+id/tvAlarmsState"
+        android:layout_width="252dp"
+        android:layout_height="101dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="Все будильники отключены"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAlarm"
-        android:layout_width="409dp"
-        android:layout_height="686dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMenu"
-        tools:listitem="@layout/item_alarm" />
+        app:layout_constraintTop_toBottomOf="@id/tvAlarmsState"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/item_alarm">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:src="@drawable/round_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAlarmsStateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EE, dd MMM, hh:mm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlarmsState" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

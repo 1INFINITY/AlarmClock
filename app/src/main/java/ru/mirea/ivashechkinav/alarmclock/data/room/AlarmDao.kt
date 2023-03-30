@@ -27,4 +27,7 @@ interface AlarmDao {
 
     @Query("SELECT * FROM alarms WHERE id = :alarmId")
     suspend fun findById(alarmId: Long): AlarmRoom
+
+    @Query("SELECT MIN(invokeTimestamp) FROM alarms WHERE invokeTimestamp > :currentTimestamp")
+    fun getNextMinTimestamp(currentTimestamp: Long): Long?
 }
