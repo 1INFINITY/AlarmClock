@@ -1,146 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_span="1"
+    android:background="@color/white"
+    android:paddingHorizontal="24dp">
 
-    <data>
-        <variable
-            name="checkbox_text"
-            type="String" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@color/white"
-        android:paddingHorizontal="24dp">
+        android:text="hh:mm"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="hh:mm"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvAlarmName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="alarm name"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/tvTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
 
-        <TextView
-            android:id="@+id/tvAlarmName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="alarm name"
-            android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@+id/tvTime"
-            app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+    <TextView
+        android:id="@+id/tvInvokeDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="dd MM."
+        app:layout_constraintBottom_toBottomOf="@+id/swAlarm"
+        app:layout_constraintEnd_toStartOf="@+id/swAlarm"
+        app:layout_constraintTop_toTopOf="@+id/swAlarm" />
 
-        <TextView
-            android:id="@+id/tvInvokeDay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            android:text="dd MM."
-            app:layout_constraintBottom_toBottomOf="@+id/swAlarm"
-            app:layout_constraintEnd_toStartOf="@+id/swAlarm"
-            app:layout_constraintTop_toTopOf="@+id/swAlarm" />
+    <Switch
+        android:id="@+id/swAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
-            android:id="@+id/swAlarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/expandableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlarmName"
+        tools:visibility="visible">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/expandableLayout"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAlarmName"
-            tools:visibility="visible">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvExpandedInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is some expanded info about the alarm."
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvExpandedInfo">
+                android:gravity="center_vertical">
 
-
-               <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                   android:id="@+id/cbMonday"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   app:letter="П"
-                   />
-                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbTuesday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:letter="В"
-                    />
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbWednesday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:layout_weight="1"
+                    app:letter="С" />
+
+                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
+                    android:id="@+id/cbTuesday"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:letter="С"
-                    />
+                    android:layout_span="1"
+                    app:letter="В" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbThursday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:letter="Ч"
-                    />
+                    android:layout_span="1"
+                    app:letter="Ч" />
+
+                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
+                    android:id="@+id/cbMonday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_span="1"
+                    app:letter="П" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbFriday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:letter="П"
-                    />
+                    android:layout_span="1"
+                    app:letter="П" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbSaturday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:letter="С"
-                    />
+                    android:layout_span="1"
+                    app:letter="С" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbSunday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:letter="В"
-                    />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_span="1"
+                    app:letter="В" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/bell_icon" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6"
+                    android:text="По умолчанию (ringtone_008)"
+                    android:layout_weight="6" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/vibration_icon" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="5"
+                    android:text="Вибросигнал"
+                    android:layout_weight="5" />
+
+                <CheckBox
+                    android:id="@+id/cbVibration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:layout_weight="1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/trash_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_span="6"
+                    android:text="Удалить"
+                    android:layout_weight="6" />
+            </TableRow>
+        </TableLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

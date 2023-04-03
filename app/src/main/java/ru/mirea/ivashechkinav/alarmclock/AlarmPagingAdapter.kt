@@ -63,7 +63,6 @@ class AlarmPagingAdapter(
             tvTime.text = alarm.timeInvoke
             tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
-            tvExpandedInfo.text = alarm.timeInvoke
             if(selectedPosition == position)
                 expandableLayout.visibility = View.VISIBLE
             else
