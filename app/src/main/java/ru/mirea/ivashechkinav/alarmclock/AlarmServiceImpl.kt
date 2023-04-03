@@ -83,6 +83,8 @@ class AlarmServiceImpl @Inject constructor(
             it.value > currentDayName.value
         }
             ?.let { it.toInt() }
+
+        calendar.timeInMillis = alarm.invokeTimestamp
         if (nextDay == null) {
             val firstDayInSet = daysSet.first().toInt()
             calendar.set(Calendar.DAY_OF_WEEK, firstDayInSet)

@@ -14,7 +14,7 @@ class AlarmPagingAdapter(
 ): PagingDataAdapter<AlarmUi, AlarmPagingAdapter.AlarmHolder>(ItemCallback), View.OnClickListener {
 
     private var selectedPosition = RecyclerView.NO_POSITION
-    fun setSelectedPosition(position: Int) {
+    private fun setSelectedPosition(position: Int) {
         if (selectedPosition != position) {
             notifyItemChanged(selectedPosition)
             selectedPosition = position
