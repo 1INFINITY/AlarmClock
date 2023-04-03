@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ReplacementSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -122,19 +123,34 @@ class AlarmsListFragment : Fragment() {
     private fun initRecyclerView() {
         adapter = AlarmPagingAdapter(object : AlarmPagingAdapter.Listener {
             override fun onChooseAlarm(alarm: Alarm) {
-                findNavController().navigate(R.id.action_alarmsListFragment_to_timePickerFragment)
+                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
+                //findNavController().navigate(R.id.action_alarmsListFragment_to_timePickerFragment)
             }
 
             override fun onToggleSwitch(alarm: Alarm) {
+                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
                 lifecycleScope.launchWhenStarted {
                     repositoryImpl.updateAlarm((alarm as AlarmUi).copy(isEnable = !alarm.isEnable))
                 }
             }
 
             override fun onDeleteAlarm(alarm: Alarm) {
+                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
                 lifecycleScope.launchWhenStarted {
                     repositoryImpl.deleteAlarm(alarm)
                 }
+            }
+
+            override fun onToggleCheckBoxes(alarm: Alarm, selectedDays: EnumSet<DaysOfWeek>) {
+                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
+            }
+
+            override fun onChooseRingtone(alarm: Alarm) {
+                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
+            }
+
+            override fun onToggleVibration(alarm: Alarm) {
+                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
             }
 
         })

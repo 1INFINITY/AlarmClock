@@ -1,5 +1,6 @@
 package ru.mirea.ivashechkinav.alarmclock
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.mirea.ivashechkinav.alarmclock.databinding.ItemAlarmBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
+import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
+import java.util.*
 
 class AlarmPagingAdapter(
     private val listener: Listener
@@ -19,12 +22,17 @@ class AlarmPagingAdapter(
             notifyItemChanged(selectedPosition)
             selectedPosition = position
             notifyItemChanged(selectedPosition)
+            return
         }
+        selectedPosition = RecyclerView.NO_POSITION
     }
     interface Listener {
         fun onChooseAlarm(alarm: Alarm)
         fun onToggleSwitch(alarm: Alarm)
         fun onDeleteAlarm(alarm: Alarm)
+        fun onToggleCheckBoxes(alarm: Alarm, selectedDays: EnumSet<DaysOfWeek>)
+        fun onChooseRingtone(alarm: Alarm)
+        fun onToggleVibration(alarm: Alarm)
     }
 
     class AlarmHolder(
@@ -36,6 +44,18 @@ class AlarmPagingAdapter(
         val alarm = getItem(alarmPos) ?: return
         when (v.id) {
             R.id.swAlarm -> listener.onToggleSwitch(alarm)
+            R.id.ringtoneRow -> listener.onChooseRingtone(alarm)
+            R.id.vibrationRow -> listener.onToggleVibration(alarm)
+            R.id.deleteRow -> listener.onDeleteAlarm(alarm)
+            //CheckBoxes
+            //R.id.checkBoxesRow -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbMonday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbTuesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbWednesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbThursday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbFriday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbSaturday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbSunday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
             else -> setSelectedPosition(alarmPos)
         }
     }
@@ -49,7 +69,19 @@ class AlarmPagingAdapter(
 
         binding.swAlarm.setOnClickListener(this)
         binding.root.setOnClickListener(this)
+        binding.ringtoneRow.setOnClickListener(this)
+        binding.vibrationRow.setOnClickListener(this)
+        binding.deleteRow.setOnClickListener(this)
 
+        //Checkboxes
+        //binding.checkBoxesRow.setOnClickListener(this)
+        binding.cbMonday.setOnClickListener(this)
+        binding.cbTuesday.setOnClickListener(this)
+        binding.cbWednesday.setOnClickListener(this)
+        binding.cbThursday.setOnClickListener(this)
+        binding.cbFriday.setOnClickListener(this)
+        binding.cbSaturday.setOnClickListener(this)
+        binding.cbSunday.setOnClickListener(this)
         return AlarmHolder(binding)
     }
 
@@ -58,6 +90,19 @@ class AlarmPagingAdapter(
         with(holder.binding) {
             root.tag = position
             swAlarm.tag = position
+            ringtoneRow.tag = position
+            vibrationRow.tag = position
+            deleteRow.tag = position
+
+            //Checkboxes
+            checkBoxesRow.tag = position
+            cbMonday.tag = position
+            cbTuesday.tag = position
+            cbWednesday.tag = position
+            cbThursday.tag = position
+            cbFriday.tag = position
+            cbSaturday.tag = position
+            cbSunday.tag = position
 
             tvAlarmName.text = alarm.name
             tvTime.text = alarm.timeInvoke

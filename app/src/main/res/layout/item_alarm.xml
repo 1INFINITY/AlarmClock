@@ -63,9 +63,28 @@
             android:layout_height="match_parent">
 
             <TableRow
+                android:id="@+id/checkBoxesRow"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                >
+
+
+                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
+                    android:id="@+id/cbMonday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:layout_weight="1"
+                    app:letter="П" />
+
+                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
+                    android:id="@+id/cbTuesday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:layout_weight="1"
+                    app:letter="В" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbWednesday"
@@ -73,58 +92,44 @@
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="С" />
-
-                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbTuesday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_span="1"
-                    app:letter="В" />
+                    app:letter="С"
+                    />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbThursday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_span="1"
+                    android:layout_weight="1"
                     app:letter="Ч" />
-
-                <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbMonday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_span="1"
-                    app:letter="П" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbFriday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_span="1"
+                    android:layout_weight="1"
                     app:letter="П" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbSaturday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_span="1"
+                    android:layout_weight="1"
                     app:letter="С" />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbSunday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_span="1"
+                    android:layout_weight="1"
                     app:letter="В" />
             </TableRow>
 
             <TableRow
+                android:id="@+id/ringtoneRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
@@ -141,11 +146,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="6"
-                    android:text="По умолчанию (ringtone_008)"
-                    android:layout_weight="6" />
+                    android:layout_weight="6"
+                    android:text="По умолчанию (ringtone_008)" />
             </TableRow>
 
             <TableRow
+                android:id="@+id/vibrationRow"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical">
@@ -161,8 +167,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="5"
-                    android:text="Вибросигнал"
-                    android:layout_weight="5" />
+                    android:layout_weight="5"
+                    android:text="Вибросигнал" />
 
                 <CheckBox
                     android:id="@+id/cbVibration"
@@ -174,6 +180,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/deleteRow"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical">
@@ -188,8 +195,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_span="6"
-                    android:text="Удалить"
-                    android:layout_weight="6" />
+                    android:layout_weight="6"
+                    android:text="Удалить" />
             </TableRow>
         </TableLayout>
 
