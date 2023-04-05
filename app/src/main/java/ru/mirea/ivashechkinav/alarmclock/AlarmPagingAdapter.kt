@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -49,13 +50,13 @@ class AlarmPagingAdapter(
             R.id.deleteRow -> listener.onDeleteAlarm(alarm)
             //CheckBoxes
             //R.id.checkBoxesRow -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbMonday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbTuesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbWednesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbThursday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbFriday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbSaturday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbSunday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.cbCircleCheckbox -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+//            R.id.cbTuesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+//            R.id.cbWednesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+//            R.id.cbThursday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+//            R.id.cbFriday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+//            R.id.cbSaturday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+//            R.id.cbSunday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
             else -> setSelectedPosition(alarmPos)
         }
     }
@@ -75,13 +76,13 @@ class AlarmPagingAdapter(
 
         //Checkboxes
         //binding.checkBoxesRow.setOnClickListener(this)
-        binding.cbMonday.setOnClickListener(this)
-        binding.cbTuesday.setOnClickListener(this)
-        binding.cbWednesday.setOnClickListener(this)
-        binding.cbThursday.setOnClickListener(this)
-        binding.cbFriday.setOnClickListener(this)
-        binding.cbSaturday.setOnClickListener(this)
-        binding.cbSunday.setOnClickListener(this)
+        binding.cbMonday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.cbTuesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.cbWednesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.cbThursday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.cbFriday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.cbSaturday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.cbSunday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
         return AlarmHolder(binding)
     }
 
@@ -95,14 +96,14 @@ class AlarmPagingAdapter(
             deleteRow.tag = position
 
             //Checkboxes
-            checkBoxesRow.tag = position
-            cbMonday.tag = position
-            cbTuesday.tag = position
-            cbWednesday.tag = position
-            cbThursday.tag = position
-            cbFriday.tag = position
-            cbSaturday.tag = position
-            cbSunday.tag = position
+            checkBoxesRow.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbMonday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbTuesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbWednesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbThursday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbFriday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbSaturday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            cbSunday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
 
             tvAlarmName.text = alarm.name
             tvTime.text = alarm.timeInvoke
