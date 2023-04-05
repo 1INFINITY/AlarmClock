@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="48dp"
     android:layout_height="48dp">
 
-    <CheckBox
+    <ru.mirea.ivashechkinav.alarmclock.CustomCheckBox
         android:id="@+id/cbCircleCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/circle_checkbox">
-    </CheckBox>
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:button="@drawable/circle_checkbox" />
 
     <TextView
         android:id="@+id/tvCircleCheckbox"
@@ -16,5 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:text="A" />
 </FrameLayout>

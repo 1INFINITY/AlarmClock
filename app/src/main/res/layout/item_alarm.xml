@@ -63,13 +63,11 @@
             android:layout_height="match_parent">
 
             <TableRow
-                android:id="@+id/checkBoxesRow"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:id="@+id/checkBoxesRow"
                 >
-
-
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
                     android:id="@+id/cbMonday"
                     android:layout_width="0dp"

@@ -1,10 +1,8 @@
 package ru.mirea.ivashechkinav.alarmclock
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +13,7 @@ import java.util.*
 
 class AlarmPagingAdapter(
     private val listener: Listener
-): PagingDataAdapter<AlarmUi, AlarmPagingAdapter.AlarmHolder>(ItemCallback), View.OnClickListener {
+) : PagingDataAdapter<AlarmUi, AlarmPagingAdapter.AlarmHolder>(ItemCallback), View.OnClickListener {
 
     private var selectedPosition = RecyclerView.NO_POSITION
     private fun setSelectedPosition(position: Int) {
@@ -27,6 +25,7 @@ class AlarmPagingAdapter(
         }
         selectedPosition = RecyclerView.NO_POSITION
     }
+
     interface Listener {
         fun onChooseAlarm(alarm: Alarm)
         fun onToggleSwitch(alarm: Alarm)
@@ -48,15 +47,10 @@ class AlarmPagingAdapter(
             R.id.ringtoneRow -> listener.onChooseRingtone(alarm)
             R.id.vibrationRow -> listener.onToggleVibration(alarm)
             R.id.deleteRow -> listener.onDeleteAlarm(alarm)
-            //CheckBoxes
-            //R.id.checkBoxesRow -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-            R.id.cbCircleCheckbox -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-//            R.id.cbTuesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-//            R.id.cbWednesday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-//            R.id.cbThursday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-//            R.id.cbFriday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-//            R.id.cbSaturday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
-//            R.id.cbSunday -> listener.onToggleCheckBoxes(alarm, EnumSet.noneOf(DaysOfWeek::class.java))
+            R.id.checkBoxesRow -> listener.onToggleCheckBoxes(
+                alarm,
+                EnumSet.noneOf(DaysOfWeek::class.java)
+            )
             else -> setSelectedPosition(alarmPos)
         }
     }
@@ -73,16 +67,7 @@ class AlarmPagingAdapter(
         binding.ringtoneRow.setOnClickListener(this)
         binding.vibrationRow.setOnClickListener(this)
         binding.deleteRow.setOnClickListener(this)
-
-        //Checkboxes
-        //binding.checkBoxesRow.setOnClickListener(this)
-        binding.cbMonday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
-        binding.cbTuesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
-        binding.cbWednesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
-        binding.cbThursday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
-        binding.cbFriday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
-        binding.cbSaturday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
-        binding.cbSunday.findViewById<CheckBox>(R.id.cbCircleCheckbox).setOnClickListener(this)
+        binding.checkBoxesRow.setOnClickListener(this)
         return AlarmHolder(binding)
     }
 
@@ -94,27 +79,19 @@ class AlarmPagingAdapter(
             ringtoneRow.tag = position
             vibrationRow.tag = position
             deleteRow.tag = position
-
-            //Checkboxes
-            checkBoxesRow.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbMonday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbTuesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbWednesday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbThursday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbFriday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbSaturday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
-            cbSunday.findViewById<CheckBox>(R.id.cbCircleCheckbox).tag = position
+            checkBoxesRow.tag = position
 
             tvAlarmName.text = alarm.name
             tvTime.text = alarm.timeInvoke
             tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
-            if(selectedPosition == position)
+            if (selectedPosition == position)
                 expandableLayout.visibility = View.VISIBLE
             else
                 expandableLayout.visibility = View.GONE
         }
     }
+
     object ItemCallback : DiffUtil.ItemCallback<AlarmUi>() {
         override fun areItemsTheSame(oldItem: AlarmUi, newItem: AlarmUi): Boolean {
             return oldItem.id == newItem.id
