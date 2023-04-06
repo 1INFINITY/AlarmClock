@@ -7,7 +7,7 @@ import ru.mirea.ivashechkinav.alarmclock.data.room.models.AlarmRoom
 @Dao
 interface AlarmDao {
 
-    @Query("SELECT * FROM alarms ORDER BY invokeTimestamp DESC")
+    @Query("SELECT * FROM alarms ORDER BY id")
     fun getPagingSource(): PagingSource<Int, AlarmRoom>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

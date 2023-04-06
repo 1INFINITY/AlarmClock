@@ -12,8 +12,11 @@ class CircleCheckBox(context: Context, attrs: AttributeSet): FrameLayout(context
         inflate(context, R.layout.circle_checkbox_layout, this)
 
         val textView: TextView = findViewById(R.id.tvCircleCheckbox)
+        val checkBox: CheckBox = findViewById(R.id.cbCircleCheckbox)
+
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.CircleCheckBox)
         textView.text = attributes.getString(R.styleable.CircleCheckBox_letter)
+        checkBox.id = attributes.getResourceId(R.styleable.CircleCheckBox_checkBoxId, -1)
         attributes.recycle()
     }
 }

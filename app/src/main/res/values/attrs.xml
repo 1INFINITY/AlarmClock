@@ -3,6 +3,6 @@
 
     <declare-styleable name="CircleCheckBox">
         <attr name="letter" format="string"/>
-        <attr name="checkBoxId" format="string"/>
+        <attr name="checkBoxId" format="reference"/>
     </declare-styleable>
 </resources>

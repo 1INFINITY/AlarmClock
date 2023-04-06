@@ -3,6 +3,7 @@ package ru.mirea.ivashechkinav.alarmclock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +17,17 @@ class AlarmPagingAdapter(
 ) : PagingDataAdapter<AlarmUi, AlarmPagingAdapter.AlarmHolder>(ItemCallback), View.OnClickListener {
 
     private var selectedPosition = RecyclerView.NO_POSITION
+
     private fun setSelectedPosition(position: Int) {
-        if (selectedPosition != position) {
-            notifyItemChanged(selectedPosition)
-            selectedPosition = position
-            notifyItemChanged(selectedPosition)
+        if(position == selectedPosition) {
+            selectedPosition = RecyclerView.NO_POSITION
+            notifyItemChanged(position)
             return
         }
-        selectedPosition = RecyclerView.NO_POSITION
+        val oldPos = selectedPosition
+        selectedPosition = position
+        notifyItemChanged(position)
+        if(oldPos != RecyclerView.NO_POSITION) notifyItemChanged(oldPos)
     }
 
     interface Listener {
@@ -49,7 +53,7 @@ class AlarmPagingAdapter(
             R.id.deleteRow -> listener.onDeleteAlarm(alarm)
             R.id.checkBoxesRow -> listener.onToggleCheckBoxes(
                 alarm,
-                EnumSet.noneOf(DaysOfWeek::class.java)
+                parseCheckBoxesStates(viewGroup = v as ViewGroup)
             )
             else -> setSelectedPosition(alarmPos)
         }
@@ -85,11 +89,25 @@ class AlarmPagingAdapter(
             tvTime.text = alarm.timeInvoke
             tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
-            if (selectedPosition == position)
-                expandableLayout.visibility = View.VISIBLE
-            else
-                expandableLayout.visibility = View.GONE
+
+            // TODO: Need to fix a very strange bug. Sometimes when items change visibility it is not shown on the screen. Need(3 or more items)
+            expandableLayout.visibility =
+                if (selectedPosition == position)
+                    View.VISIBLE
+                else
+                    View.GONE
         }
+    }
+    private fun parseCheckBoxesStates(viewGroup: ViewGroup): EnumSet<DaysOfWeek> {
+        val set = EnumSet.noneOf(DaysOfWeek::class.java)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbMonday).isChecked) set.add(DaysOfWeek.MONDAY)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbTuesday).isChecked) set.add(DaysOfWeek.TUESDAY)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbWednesday).isChecked) set.add(DaysOfWeek.WEDNESDAY)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbThursday).isChecked) set.add(DaysOfWeek.THURSDAY)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbFriday).isChecked) set.add(DaysOfWeek.FRIDAY)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbSaturday).isChecked) set.add(DaysOfWeek.SATURDAY)
+        if(viewGroup.findViewById<CheckBox>(R.id.cbSunday).isChecked) set.add(DaysOfWeek.SUNDAY)
+        return set
     }
 
     object ItemCallback : DiffUtil.ItemCallback<AlarmUi>() {

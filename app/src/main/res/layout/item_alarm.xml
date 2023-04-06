@@ -69,61 +69,61 @@
                 android:id="@+id/checkBoxesRow"
                 >
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbMonday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="П" />
+                    app:letter="П"
+                    app:checkBoxId="@+id/cbMonday"/>
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbTuesday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="В" />
+                    app:letter="В"
+                    app:checkBoxId="@+id/cbTuesday"/>
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbWednesday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
                     app:letter="С"
+                    app:checkBoxId="@+id/cbWednesday"
                     />
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbThursday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="Ч" />
+                    app:letter="Ч"
+                    app:checkBoxId="@+id/cbThursday"/>
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbFriday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="П" />
+                    app:letter="П"
+                    app:checkBoxId="@+id/cbFriday"/>
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbSaturday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="С" />
+                    app:letter="С"
+                    app:checkBoxId="@+id/cbSaturday"/>
 
                 <ru.mirea.ivashechkinav.alarmclock.CircleCheckBox
-                    android:id="@+id/cbSunday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
                     android:layout_weight="1"
-                    app:letter="В" />
+                    app:letter="В"
+                    app:checkBoxId="@+id/cbSunday"/>
             </TableRow>
 
             <TableRow
