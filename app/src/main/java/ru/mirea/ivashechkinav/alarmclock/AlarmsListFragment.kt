@@ -1,22 +1,15 @@
 package ru.mirea.ivashechkinav.alarmclock
 
 import android.app.TimePickerDialog
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.database.Cursor
 import android.media.RingtoneManager
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ReplacementSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +19,6 @@ import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
-import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek.Companion.toInt
 import ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime.GetNextMinInvokeAlarmTimeUseCase
 import java.util.*
 import javax.inject.Inject

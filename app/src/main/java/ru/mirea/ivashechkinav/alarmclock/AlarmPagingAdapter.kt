@@ -90,6 +90,15 @@ class AlarmPagingAdapter(
             tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
 
+            checkBoxesRow.let {
+                it.findViewById<CheckBox>(R.id.cbMonday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.MONDAY)
+                it.findViewById<CheckBox>(R.id.cbTuesday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.TUESDAY)
+                it.findViewById<CheckBox>(R.id.cbWednesday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.WEDNESDAY)
+                it.findViewById<CheckBox>(R.id.cbThursday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.THURSDAY)
+                it.findViewById<CheckBox>(R.id.cbFriday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.FRIDAY)
+                it.findViewById<CheckBox>(R.id.cbSaturday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.SATURDAY)
+                it.findViewById<CheckBox>(R.id.cbSunday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.SUNDAY)
+            }
             // TODO: Need to fix a very strange bug. Sometimes when items change visibility it is not shown on the screen. Need(3 or more items)
             expandableLayout.visibility =
                 if (selectedPosition == position)
