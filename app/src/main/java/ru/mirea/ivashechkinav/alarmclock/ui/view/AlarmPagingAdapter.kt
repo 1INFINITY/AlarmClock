@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,11 @@ import android.widget.CheckBox
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import ru.mirea.ivashechkinav.alarmclock.R
 import ru.mirea.ivashechkinav.alarmclock.databinding.ItemAlarmBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
+import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
 import java.util.*
 
 class AlarmPagingAdapter(

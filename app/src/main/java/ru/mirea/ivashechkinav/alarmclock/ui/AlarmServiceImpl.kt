@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -10,12 +10,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
-import ru.mirea.ivashechkinav.alarmclock.domain.AlarmRepository
 import ru.mirea.ivashechkinav.alarmclock.domain.AlarmService
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek.Companion.toInt
+import ru.mirea.ivashechkinav.alarmclock.ui.activities.AlarmActivity
+import ru.mirea.ivashechkinav.alarmclock.ui.activities.MainActivity
+import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
 import java.text.SimpleDateFormat
-import java.time.MonthDay
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

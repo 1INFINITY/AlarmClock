@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/alarmsListFragment"
-        android:name="ru.mirea.ivashechkinav.alarmclock.AlarmsListFragment"
+        android:name="ru.mirea.ivashechkinav.alarmclock.ui.fragments.AlarmsListFragment"
         android:label="fragment_alarms_list"
         tools:layout="@layout/fragment_alarms_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/timePickerFragment"
-        android:name="ru.mirea.ivashechkinav.alarmclock.TimePickerFragment"
+        android:name="ru.mirea.ivashechkinav.alarmclock.ui.fragments.TimePickerFragment"
         android:label="fragment_time_picker"
         tools:layout="@layout/fragment_time_picker" />
 </navigation>

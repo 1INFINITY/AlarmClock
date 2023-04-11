@@ -1,9 +1,7 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 

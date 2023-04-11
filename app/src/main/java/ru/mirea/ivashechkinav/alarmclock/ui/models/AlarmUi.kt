@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.models
 
 import android.annotation.SuppressLint
 import android.net.Uri

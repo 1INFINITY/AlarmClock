@@ -14,10 +14,10 @@
         android:theme="@style/Theme.AlarmClock"
         tools:targetApi="31">
         <activity
-            android:name=".AlarmActivity"
+            android:name=".ui.activities.AlarmActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

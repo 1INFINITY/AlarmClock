@@ -1,7 +1,6 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.fragments
 
 import android.app.TimePickerDialog
-import android.database.Cursor
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +19,9 @@ import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime.GetNextMinInvokeAlarmTimeUseCase
+import ru.mirea.ivashechkinav.alarmclock.ui.view.AlarmPagingAdapter
+import ru.mirea.ivashechkinav.alarmclock.ui.AlarmServiceImpl
+import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
 import java.util.*
 import javax.inject.Inject
 

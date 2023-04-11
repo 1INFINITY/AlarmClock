@@ -1,10 +1,11 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.view
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.TextView
+import ru.mirea.ivashechkinav.alarmclock.R
 
 class CircleCheckBox(context: Context, attrs: AttributeSet): FrameLayout(context, attrs) {
 

@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.fragments
 
 import android.media.RingtoneManager
 import android.os.Bundle
@@ -9,8 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentTimePickerBinding
-import ru.mirea.ivashechkinav.alarmclock.domain.AlarmService
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
+import ru.mirea.ivashechkinav.alarmclock.ui.AlarmServiceImpl
+import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
 import java.util.*
 import javax.inject.Inject
 

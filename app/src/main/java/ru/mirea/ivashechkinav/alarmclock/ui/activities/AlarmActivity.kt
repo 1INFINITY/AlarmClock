@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock
+package ru.mirea.ivashechkinav.alarmclock.ui.activities
 
 import android.media.Ringtone
 import android.media.RingtoneManager
@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.ActivityAlarmBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
+import ru.mirea.ivashechkinav.alarmclock.ui.AlarmServiceImpl
 import javax.inject.Inject
 
 @AndroidEntryPoint
