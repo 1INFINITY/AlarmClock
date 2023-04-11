@@ -21,15 +21,16 @@ class AlarmPagingAdapter(
     private var selectedPosition = RecyclerView.NO_POSITION
 
     private fun setSelectedPosition(position: Int) {
-        if(position == selectedPosition) {
+        val previousPosition = selectedPosition
+        if(previousPosition == position) {
             selectedPosition = RecyclerView.NO_POSITION
-            notifyItemChanged(position)
+            notifyItemChanged(previousPosition)
             return
         }
-        val oldPos = selectedPosition
         selectedPosition = position
+        if(previousPosition != RecyclerView.NO_POSITION)
+            notifyItemChanged(previousPosition)
         notifyItemChanged(position)
-        if(oldPos != RecyclerView.NO_POSITION) notifyItemChanged(oldPos)
     }
 
     interface Listener {
@@ -89,7 +90,7 @@ class AlarmPagingAdapter(
 
             tvAlarmName.text = alarm.name
             tvTime.text = alarm.timeInvoke
-            tvInvokeDay.text = alarm.dayInvoke
+            //tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
 
             checkBoxesRow.let {
@@ -101,12 +102,7 @@ class AlarmPagingAdapter(
                 it.findViewById<CheckBox>(R.id.cbSaturday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.SATURDAY)
                 it.findViewById<CheckBox>(R.id.cbSunday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.SUNDAY)
             }
-            // TODO: Need to fix a very strange bug. Sometimes when items change visibility it is not shown on the screen. Need(3 or more items)
-            expandableLayout.visibility =
-                if (selectedPosition == position)
-                    View.VISIBLE
-                else
-                    View.GONE
+            expandableLayout.visibility = if(position == selectedPosition) View.VISIBLE else View.GONE
         }
     }
     private fun parseCheckBoxesStates(viewGroup: ViewGroup): EnumSet<DaysOfWeek> {
