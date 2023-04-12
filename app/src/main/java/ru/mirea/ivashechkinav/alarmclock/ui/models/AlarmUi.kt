@@ -17,6 +17,7 @@ data class AlarmUi(
     override val invokeTimestamp: Long,
     override val daysOfWeek: EnumSet<DaysOfWeek>,
     override val isEnable: Boolean,
+    override val isVibrationEnable: Boolean
 ) : Alarm {
     val getSpannableUseCase = GetSpannableDaysStringUseCase()
 
@@ -31,7 +32,8 @@ data class AlarmUi(
         alarmSoundUri = alarm.alarmSoundUri,
         invokeTimestamp = alarm.invokeTimestamp,
         daysOfWeek = alarm.daysOfWeek,
-        isEnable = alarm.isEnable
+        isEnable = alarm.isEnable,
+        isVibrationEnable = alarm.isVibrationEnable
     )
 
     private fun parseTime(): String {

@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock.ui.view
+package ru.mirea.ivashechkinav.alarmclock.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +52,7 @@ class AlarmPagingAdapter(
         when (v.id) {
             R.id.swAlarm -> listener.onToggleSwitch(alarm)
             R.id.ringtoneRow -> listener.onChooseRingtone(alarm)
-            R.id.vibrationRow -> listener.onToggleVibration(alarm)
+            R.id.cbVibration -> listener.onToggleVibration(alarm)
             R.id.deleteRow -> listener.onDeleteAlarm(alarm)
             R.id.checkBoxesRow -> listener.onToggleCheckBoxes(
                 alarm,
@@ -72,7 +72,7 @@ class AlarmPagingAdapter(
         binding.swAlarm.setOnClickListener(this)
         binding.root.setOnClickListener(this)
         binding.ringtoneRow.setOnClickListener(this)
-        binding.vibrationRow.setOnClickListener(this)
+        binding.cbVibration.setOnClickListener(this)
         binding.deleteRow.setOnClickListener(this)
         binding.checkBoxesRow.setOnClickListener(this)
         return AlarmHolder(binding)
@@ -84,14 +84,15 @@ class AlarmPagingAdapter(
             root.tag = position
             swAlarm.tag = position
             ringtoneRow.tag = position
-            vibrationRow.tag = position
+            cbVibration.tag = position
             deleteRow.tag = position
             checkBoxesRow.tag = position
 
             tvAlarmName.text = alarm.name
             tvTime.text = alarm.timeInvoke
-            //tvInvokeDay.text = alarm.dayInvoke
+            tvInvokeDay.text = alarm.dayInvoke
             swAlarm.isChecked = alarm.isEnable
+            cbVibration.isChecked = alarm.isVibrationEnable
 
             checkBoxesRow.let {
                 it.findViewById<CheckBox>(R.id.cbMonday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.MONDAY)

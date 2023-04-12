@@ -10,4 +10,5 @@ interface Alarm {
     val invokeTimestamp: Long
     val daysOfWeek: EnumSet<DaysOfWeek>
     val isEnable: Boolean
+    val isVibrationEnable: Boolean
 }

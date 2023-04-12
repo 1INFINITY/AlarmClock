@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock.ui.view
+package ru.mirea.ivashechkinav.alarmclock.domain.view
 
 import android.content.Context
 import android.util.AttributeSet

@@ -4,7 +4,7 @@
     android:layout_width="48dp"
     android:layout_height="48dp">
 
-    <ru.mirea.ivashechkinav.alarmclock.ui.view.CustomCheckBox
+    <ru.mirea.ivashechkinav.alarmclock.domain.view.CustomCheckBox
         android:id="@+id/cbCircleCheckbox"
         android:layout_width="32dp"
         android:layout_height="48dp"

@@ -1,4 +1,4 @@
-package ru.mirea.ivashechkinav.alarmclock.ui.view
+package ru.mirea.ivashechkinav.alarmclock.domain.view
 
 import android.annotation.SuppressLint
 import android.content.Context

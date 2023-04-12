@@ -19,7 +19,7 @@ import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime.GetNextMinInvokeAlarmTimeUseCase
-import ru.mirea.ivashechkinav.alarmclock.ui.view.AlarmPagingAdapter
+import ru.mirea.ivashechkinav.alarmclock.ui.adapters.AlarmPagingAdapter
 import ru.mirea.ivashechkinav.alarmclock.ui.AlarmServiceImpl
 import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
 import java.util.*
@@ -72,7 +72,8 @@ class AlarmsListFragment : Fragment() {
             alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
             invokeTimestamp = timeInMillis,
             daysOfWeek = EnumSet.noneOf(DaysOfWeek::class.java),
-            isEnable = true
+            isEnable = true,
+            isVibrationEnable = true
         )
         alarmServiceImpl.setAlarm(alarm)
     }
@@ -118,7 +119,6 @@ class AlarmsListFragment : Fragment() {
         adapter = AlarmPagingAdapter(object : AlarmPagingAdapter.Listener {
             override fun onChooseAlarm(alarm: Alarm) {
                 Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
-                //findNavController().navigate(R.id.action_alarmsListFragment_to_timePickerFragment)
             }
 
             override fun onToggleSwitch(alarm: Alarm) {
@@ -148,6 +148,10 @@ class AlarmsListFragment : Fragment() {
 
             override fun onToggleVibration(alarm: Alarm) {
                 Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
+                val newAlarm =(alarm as AlarmUi).copy(isVibrationEnable = !alarm.isVibrationEnable)
+                lifecycleScope.launchWhenStarted {
+                    repositoryImpl.updateAlarm(newAlarm)
+                }
             }
 
         })

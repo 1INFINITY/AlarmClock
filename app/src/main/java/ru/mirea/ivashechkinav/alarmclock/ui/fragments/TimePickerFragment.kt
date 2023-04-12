@@ -58,7 +58,8 @@ class TimePickerFragment : Fragment() {
                 alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
                 invokeTimestamp = c.timeInMillis,
                 daysOfWeek = getDaysOfWeek(),
-                isEnable = true
+                isEnable = true,
+                isVibrationEnable = true
             )
             alarmService.setAlarm(alarm)
         }

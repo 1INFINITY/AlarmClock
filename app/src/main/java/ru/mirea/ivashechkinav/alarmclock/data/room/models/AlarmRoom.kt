@@ -19,7 +19,8 @@ data class AlarmRoom(
     override val alarmSoundUri: Uri,
     override val invokeTimestamp: Long,
     override val daysOfWeek: EnumSet<DaysOfWeek>,
-    override val isEnable: Boolean
+    override val isEnable: Boolean,
+    override val isVibrationEnable: Boolean
 ) : Alarm {
 
     constructor(alarm: Alarm) : this(
@@ -28,6 +29,7 @@ data class AlarmRoom(
         alarmSoundUri = alarm.alarmSoundUri,
         invokeTimestamp = alarm.invokeTimestamp,
         daysOfWeek = alarm.daysOfWeek,
-        isEnable = alarm.isEnable
+        isEnable = alarm.isEnable,
+        isVibrationEnable = alarm.isVibrationEnable
     )
 }

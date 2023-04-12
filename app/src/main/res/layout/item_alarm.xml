@@ -68,7 +68,7 @@
                 android:gravity="center_vertical"
                 android:id="@+id/checkBoxesRow"
                 >
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
@@ -76,7 +76,7 @@
                     app:letter="П"
                     app:checkBoxId="@+id/cbMonday"/>
 
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
@@ -84,7 +84,7 @@
                     app:letter="В"
                     app:checkBoxId="@+id/cbTuesday"/>
 
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
@@ -93,7 +93,7 @@
                     app:checkBoxId="@+id/cbWednesday"
                     />
 
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
@@ -101,7 +101,7 @@
                     app:letter="Ч"
                     app:checkBoxId="@+id/cbThursday"/>
 
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
@@ -109,7 +109,7 @@
                     app:letter="П"
                     app:checkBoxId="@+id/cbFriday"/>
 
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
@@ -117,7 +117,7 @@
                     app:letter="С"
                     app:checkBoxId="@+id/cbSaturday"/>
 
-                <ru.mirea.ivashechkinav.alarmclock.ui.view.CircleCheckBox
+                <ru.mirea.ivashechkinav.alarmclock.domain.view.CircleCheckBox
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_span="1"
