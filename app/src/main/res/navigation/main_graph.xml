@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_alarmsListFragment_to_timePickerFragment"
             app:destination="@id/timePickerFragment" />
+        <action
+            android:id="@+id/action_alarmsListFragment_to_ringtonePickerFragment"
+            app:destination="@id/ringtonePickerFragment" />
     </fragment>
     <fragment
         android:id="@+id/timePickerFragment"
         android:name="ru.mirea.ivashechkinav.alarmclock.ui.fragments.TimePickerFragment"
         android:label="fragment_time_picker"
         tools:layout="@layout/fragment_time_picker" />
+    <fragment
+        android:id="@+id/ringtonePickerFragment"
+        android:name="ru.mirea.ivashechkinav.alarmclock.ui.fragments.RingtonePickerFragment"
+        android:label="fragment_ringtone_picker"
+        tools:layout="@layout/fragment_ringtone_picker" />
 </navigation>

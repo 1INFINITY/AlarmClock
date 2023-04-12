@@ -34,7 +34,6 @@ class AlarmPagingAdapter(
     }
 
     interface Listener {
-        fun onChooseAlarm(alarm: Alarm)
         fun onToggleSwitch(alarm: Alarm)
         fun onDeleteAlarm(alarm: Alarm)
         fun onToggleCheckBoxes(alarm: Alarm, selectedDays: EnumSet<DaysOfWeek>)

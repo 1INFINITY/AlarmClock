@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import ru.mirea.ivashechkinav.alarmclock.R
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
@@ -100,7 +102,6 @@ class AlarmsListFragment : Fragment() {
 
     private fun initButtons() {
         binding.btnAdd.setOnClickListener {
-//            findNavController().navigate(R.id.action_alarmsListFragment_to_timePickerFragment)
             val timePicker: TimePickerDialog = TimePickerDialog(
                 requireContext(),
                 timePickerDialogListener,
@@ -108,18 +109,12 @@ class AlarmsListFragment : Fragment() {
                 10,
                 true
             )
-
-            // then after building the timepicker
-            // dialog show the dialog to user
             timePicker.show()
         }
     }
 
     private fun initRecyclerView() {
         adapter = AlarmPagingAdapter(object : AlarmPagingAdapter.Listener {
-            override fun onChooseAlarm(alarm: Alarm) {
-                Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
-            }
 
             override fun onToggleSwitch(alarm: Alarm) {
                 Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
@@ -144,6 +139,7 @@ class AlarmsListFragment : Fragment() {
 
             override fun onChooseRingtone(alarm: Alarm) {
                 Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
+                findNavController().navigate(R.id.action_alarmsListFragment_to_ringtonePickerFragment)
             }
 
             override fun onToggleVibration(alarm: Alarm) {
