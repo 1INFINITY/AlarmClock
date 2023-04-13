@@ -1,5 +1,6 @@
 package ru.mirea.ivashechkinav.alarmclock.ui.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -11,11 +12,25 @@ import ru.mirea.ivashechkinav.alarmclock.R
 import ru.mirea.ivashechkinav.alarmclock.databinding.ItemRingtoneBinding
 import ru.mirea.ivashechkinav.alarmclock.ui.models.RingtoneUi
 
-class RingtoneUserAdapter(private val userItems: List<RingtoneUi>, private val context: Context) : BaseAdapter() {
+class RingtoneUserAdapter(private val userItems: List<RingtoneUi>, private val context: Context, private val listener: Listener) : BaseAdapter(), View.OnClickListener {
     private var items: List<RingtoneUi>
     private val inflater = LayoutInflater.from(context)
     private lateinit var binding: ItemRingtoneBinding
 
+    override fun onClick(v: View) {
+        val ringtoneIndex = v.tag as Int
+        if(ringtoneIndex == 0){
+            listener.onAddRingtone()
+            return
+        }
+        val ringtoneUi = items[ringtoneIndex]
+        listener.onChooseRingtone(ringtoneUi)
+    }
+    interface Listener {
+        fun onChooseRingtone(ringtoneUi: RingtoneUi)
+        fun onAddRingtone()
+        fun onDeleteRingtone()
+    }
     init {
         items =
             mutableListOf(
@@ -28,13 +43,11 @@ class RingtoneUserAdapter(private val userItems: List<RingtoneUi>, private val c
                 this.addAll(userItems)
             }
     }
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        if (convertView == null) {
-            binding = ItemRingtoneBinding.inflate(inflater, parent, false)
-            binding.root.tag = binding
-        } else {
-            binding = convertView.tag as ItemRingtoneBinding
-        }
+        binding = ItemRingtoneBinding.inflate(inflater, parent, false)
+        binding.root.tag = position
+        binding.root.setOnClickListener(this)
 
         val item = items[position]
         binding.tvRingtoneName.text = item.name
