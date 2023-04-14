@@ -1,5 +1,6 @@
 package ru.mirea.ivashechkinav.alarmclock.domain
 
+import android.net.Uri
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
@@ -10,6 +11,8 @@ interface AlarmRepository {
     suspend fun saveAlarm(alarm: Alarm): Long
 
     suspend fun updateAlarm(alarm: Alarm)
+
+    suspend fun updateAlarmUri(id: Long, uri: Uri)
 
     suspend fun deleteAlarm(alarm: Alarm)
 

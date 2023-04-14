@@ -139,7 +139,8 @@ class AlarmsListFragment : Fragment() {
 
             override fun onChooseRingtone(alarm: Alarm) {
                 Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
-                findNavController().navigate(R.id.action_alarmsListFragment_to_ringtonePickerFragment)
+                val action = AlarmsListFragmentDirections.actionAlarmsListFragmentToRingtonePickerFragment(alarm.id!!)
+                findNavController().navigate(action)
             }
 
             override fun onToggleVibration(alarm: Alarm) {

@@ -8,17 +8,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentRingtonePickerBinding
+import ru.mirea.ivashechkinav.alarmclock.domain.usecase.UseCaseSuspend
+import ru.mirea.ivashechkinav.alarmclock.domain.usecase.setRingtoneOnAlarm.SetRingtoneOnAlarmArgs
+import ru.mirea.ivashechkinav.alarmclock.domain.usecase.setRingtoneOnAlarm.SetRingtoneOnAlarmUseCase
 import ru.mirea.ivashechkinav.alarmclock.ui.adapters.RingtoneDeviceAdapter
 import ru.mirea.ivashechkinav.alarmclock.ui.adapters.RingtoneUserAdapter
 import ru.mirea.ivashechkinav.alarmclock.ui.models.RingtoneUi
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class RingtonePickerFragment : Fragment() {
 
+    @Inject
+    lateinit var repositoryImpl: AlarmRepositoryImpl
+
+    @Inject
+    lateinit var setRingtoneOnAlarmUseCaseSuspend: SetRingtoneOnAlarmUseCase
+
     lateinit var binding: FragmentRingtonePickerBinding
+    private val args: RingtonePickerFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +47,17 @@ class RingtonePickerFragment : Fragment() {
         return binding.root
     }
 
+    private fun chooseRingtone(ringtoneUi: RingtoneUi) {
+        val args = SetRingtoneOnAlarmArgs(
+            alarmId = args.alarmId,
+            uri = ringtoneUi.uri!!
+        )
+        lifecycleScope.launchWhenStarted {
+            setRingtoneOnAlarmUseCaseSuspend.execute(args)
+            findNavController().popBackStack()
+        }
+    }
+
     private fun initDeviceList() {
         val deviceRingtones: List<RingtoneUi> = getRingtones().map { (title, link) ->
             RingtoneUi(name = title, uri = link.toUri())
@@ -41,7 +67,7 @@ class RingtonePickerFragment : Fragment() {
             requireContext(),
             object : RingtoneDeviceAdapter.Listener {
                 override fun onChooseRingtone(ringtoneUi: RingtoneUi) {
-                    TODO("Not yet implemented")
+                    chooseRingtone(ringtoneUi)
                 }
             })
         binding.listViewDeviceRingtones.adapter = adapter
@@ -53,7 +79,7 @@ class RingtonePickerFragment : Fragment() {
             requireContext(),
             object : RingtoneUserAdapter.Listener {
                 override fun onChooseRingtone(ringtoneUi: RingtoneUi) {
-                    TODO("Not yet implemented")
+                    chooseRingtone(ringtoneUi)
                 }
 
                 override fun onAddRingtone() {

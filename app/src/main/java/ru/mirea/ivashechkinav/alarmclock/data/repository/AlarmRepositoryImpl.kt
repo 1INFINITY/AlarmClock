@@ -1,5 +1,6 @@
 package ru.mirea.ivashechkinav.alarmclock.data.repository
 
+import android.net.Uri
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -36,6 +37,10 @@ class AlarmRepositoryImpl @Inject constructor(
 
     override suspend fun updateAlarm(alarm: Alarm) = withContext(Dispatchers.IO) {
         alarmDao.update(AlarmRoom(alarm))
+    }
+
+    override suspend fun updateAlarmUri(id: Long, uri: Uri) = withContext(Dispatchers.IO) {
+        return@withContext alarmDao.updateUri(id, uri)
     }
 
     override suspend fun deleteAlarm(alarm: Alarm) = withContext(Dispatchers.IO) {

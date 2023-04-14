@@ -1,6 +1,5 @@
 package ru.mirea.ivashechkinav.alarmclock.ui.models
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.text.SpannableString
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
@@ -8,7 +7,6 @@ import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.usecase.GetSpannableDaysStringUseCase
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
 data class AlarmUi(
     override val id: Long?,

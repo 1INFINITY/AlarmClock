@@ -1,5 +1,6 @@
 package ru.mirea.ivashechkinav.alarmclock.data.room
 
+import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.room.*
 import ru.mirea.ivashechkinav.alarmclock.data.room.models.AlarmRoom
@@ -15,6 +16,9 @@ interface AlarmDao {
 
     @Update
     suspend fun update(alarm: AlarmRoom)
+
+    @Query("UPDATE alarms SET alarmSoundUri = :uri WHERE id = :id")
+    suspend fun updateUri(id: Long, uri: Uri)
 
     @Delete
     suspend fun delete(alarmRoom: AlarmRoom)

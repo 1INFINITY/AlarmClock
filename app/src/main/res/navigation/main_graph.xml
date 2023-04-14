@@ -15,7 +15,8 @@
             app:destination="@id/timePickerFragment" />
         <action
             android:id="@+id/action_alarmsListFragment_to_ringtonePickerFragment"
-            app:destination="@id/ringtonePickerFragment" />
+            app:destination="@id/ringtonePickerFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/timePickerFragment"
@@ -26,5 +27,9 @@
         android:id="@+id/ringtonePickerFragment"
         android:name="ru.mirea.ivashechkinav.alarmclock.ui.fragments.RingtonePickerFragment"
         android:label="fragment_ringtone_picker"
-        tools:layout="@layout/fragment_ringtone_picker" />
+        tools:layout="@layout/fragment_ringtone_picker" >
+        <argument
+            android:name="alarmId"
+            app:argType="long" />
+    </fragment>
 </navigation>
