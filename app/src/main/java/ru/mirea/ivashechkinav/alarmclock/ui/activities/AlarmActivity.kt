@@ -31,15 +31,14 @@ class AlarmActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             val alarm: Alarm = repositoryImpl.getAlarmById(alarmId = requestCode)
             ringtone = RingtoneManager.getRingtone(this@AlarmActivity, alarm.alarmSoundUri)
-            //repositoryImpl.deleteAlarmById(requestCode)
             alarmServiceImpl.alarmSwitch(requestCode)
-            //playRingtone()
+            playRingtone()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //stopRingtone()
+        stopRingtone()
     }
 
     private fun playRingtone() {

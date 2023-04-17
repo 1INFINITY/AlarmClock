@@ -90,10 +90,10 @@ class AlarmServiceImpl @Inject constructor(
             val firstDayInSet = daysSet.first().toInt()
             calendar.set(Calendar.DAY_OF_WEEK, firstDayInSet)
             calendar.timeInMillis += 7 * 24 * 3600 * 1000
-            return (alarm as AlarmUi).copy(invokeTimestamp = calendar.timeInMillis)
+            return AlarmUi(alarm).copy(invokeTimestamp = calendar.timeInMillis)
         }
         calendar.set(Calendar.DAY_OF_WEEK, nextDay)
-        return (alarm as AlarmUi).copy(invokeTimestamp = calendar.timeInMillis)
+        return AlarmUi(alarm).copy(invokeTimestamp = calendar.timeInMillis)
     }
 
     private fun getAlarmInfoPendingIntent(): PendingIntent {
