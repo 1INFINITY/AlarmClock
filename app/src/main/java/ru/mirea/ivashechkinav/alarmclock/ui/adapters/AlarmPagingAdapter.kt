@@ -1,5 +1,7 @@
 package ru.mirea.ivashechkinav.alarmclock.ui.adapters
 
+import android.content.Context
+import android.media.RingtoneManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,15 +9,18 @@ import android.widget.CheckBox
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.qualifiers.ApplicationContext
 import ru.mirea.ivashechkinav.alarmclock.R
 import ru.mirea.ivashechkinav.alarmclock.databinding.ItemAlarmBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
 import java.util.*
+import javax.inject.Inject
 
-class AlarmPagingAdapter(
-    private val listener: Listener
+class AlarmPagingAdapter @Inject constructor(
+    private val listener: Listener,
+    private val appContext: Context
 ) : PagingDataAdapter<AlarmUi, AlarmPagingAdapter.AlarmHolder>(ItemCallback), View.OnClickListener {
 
     private var selectedPosition = RecyclerView.NO_POSITION
@@ -102,6 +107,8 @@ class AlarmPagingAdapter(
                 it.findViewById<CheckBox>(R.id.cbSaturday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.SATURDAY)
                 it.findViewById<CheckBox>(R.id.cbSunday).isChecked = alarm.daysOfWeek.contains(DaysOfWeek.SUNDAY)
             }
+            tvAlarmRingtoneName.text = RingtoneManager.getRingtone(appContext, alarm.alarmSoundUri).getTitle(appContext)
+
             expandableLayout.visibility = if(position == selectedPosition) View.VISIBLE else View.GONE
         }
     }

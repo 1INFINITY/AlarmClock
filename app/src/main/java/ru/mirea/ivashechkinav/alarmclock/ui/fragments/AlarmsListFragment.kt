@@ -71,7 +71,7 @@ class AlarmsListFragment : Fragment() {
         val alarm = AlarmUi(
             id = null,
             name = "",
-            alarmSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
+            alarmSoundUri = RingtoneManager.getActualDefaultRingtoneUri(requireContext(), RingtoneManager.TYPE_ALARM),
             invokeTimestamp = timeInMillis,
             daysOfWeek = EnumSet.noneOf(DaysOfWeek::class.java),
             isEnable = true,
@@ -151,7 +151,8 @@ class AlarmsListFragment : Fragment() {
                 }
             }
 
-        })
+        },
+            requireContext())
         lifecycleScope.launchWhenStarted {
             repositoryImpl.getAlarms().collect { pagingData ->
                 adapter.submitData(

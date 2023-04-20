@@ -41,8 +41,10 @@ class RingtonePickerFragment : Fragment() {
     ): View? {
         binding = FragmentRingtonePickerBinding.inflate(inflater, container, false)
 
-        initDeviceList()
-        initUserList()
+        lifecycleScope.launchWhenStarted {
+            initDeviceList()
+            initUserList()
+        }
 
         return binding.root
     }
@@ -58,10 +60,12 @@ class RingtonePickerFragment : Fragment() {
         }
     }
 
-    private fun initDeviceList() {
+    private suspend fun initDeviceList() {
+        val alarm = repositoryImpl.getAlarmById(args.alarmId)
         val deviceRingtones: List<RingtoneUi> = getRingtones().map { (title, link) ->
             RingtoneUi(name = title, uri = link.toUri())
         }
+
         val adapter = RingtoneDeviceAdapter(
             deviceRingtones,
             requireContext(),
@@ -69,11 +73,14 @@ class RingtonePickerFragment : Fragment() {
                 override fun onChooseRingtone(ringtoneUi: RingtoneUi) {
                     chooseRingtone(ringtoneUi)
                 }
-            })
+            },
+            alarm.alarmSoundUri)
+
         binding.listViewDeviceRingtones.adapter = adapter
     }
 
-    private fun initUserList() {
+    private suspend fun initUserList() {
+        val alarm = repositoryImpl.getAlarmById(args.alarmId)
         val adapter = RingtoneUserAdapter(
             listOf(),
             requireContext(),
@@ -89,7 +96,8 @@ class RingtonePickerFragment : Fragment() {
                 override fun onDeleteRingtone() {
                     TODO("Not yet implemented")
                 }
-            })
+            },
+            alarm.alarmSoundUri)
         binding.listViewUserRingtones.adapter = adapter
     }
 
