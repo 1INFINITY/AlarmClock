@@ -3,6 +3,8 @@ package ru.mirea.ivashechkinav.alarmclock.ui.activities
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.Bundle
+import android.util.Log
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,6 +13,7 @@ import ru.mirea.ivashechkinav.alarmclock.databinding.ActivityAlarmBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.ui.AlarmServiceImpl
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AlarmActivity : AppCompatActivity() {
@@ -31,7 +34,6 @@ class AlarmActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             val alarm: Alarm = repositoryImpl.getAlarmById(alarmId = requestCode)
             ringtone = RingtoneManager.getRingtone(this@AlarmActivity, alarm.alarmSoundUri)
-            alarmServiceImpl.alarmSwitch(requestCode)
             playRingtone()
         }
     }

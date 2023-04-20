@@ -39,17 +39,9 @@ class AlarmServiceImpl @Inject constructor(
     override fun setAlarm(alarm: Alarm) {
         GlobalScope.launch {
             val calendar = Calendar.getInstance()
-            var editedAlarm = findNearestAlarm(calendar = calendar, alarm = alarm)
-            log(editedAlarm)
-            val alarmRequestCode = repository.saveAlarm(editedAlarm)
-            val alarmManager = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val alarmClockInfo =
-                AlarmManager.AlarmClockInfo(editedAlarm.invokeTimestamp, getAlarmInfoPendingIntent())
-
-            alarmManager.setAlarmClock(
-                alarmClockInfo,
-                getAlarmActionPendingIntent(alarmRequestCode)
-            )
+            val editedAlarm = findNearestAlarm(calendar = calendar, alarm = alarm)
+            val alarmId = repository.saveAlarm(editedAlarm)
+            alarmStart(alarmId, editedAlarm.invokeTimestamp)
         }
     }
 
@@ -59,18 +51,19 @@ class AlarmServiceImpl @Inject constructor(
             val calendar = Calendar.getInstance()
             val editedAlarm = findNearestAlarm(calendar = calendar, alarm = alarm)
             repository.updateAlarm(editedAlarm)
-            val alarmManager = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val alarmClockInfo =
-                AlarmManager.AlarmClockInfo(calendar.timeInMillis, getAlarmInfoPendingIntent())
-            alarmManager.setAlarmClock(alarmClockInfo, getAlarmActionPendingIntent(alarmId))
+            alarmStart(alarmId, editedAlarm.invokeTimestamp)
         }
     }
-
-    private fun log(alarm: Alarm) {
-        val textDate = SimpleDateFormat("dd.MM hh:mm").format(Date(alarm.invokeTimestamp))
-        Log.d("AlarmNextInvoke", textDate)
-
+    private fun alarmStart(alarmId: Long, timeInMillis: Long) {
+        val receiverIntent = Intent(appContext, AlarmReceiver::class.java)
+        receiverIntent.putExtra("alarmId", alarmId)
+        val pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        val pendingIntent = PendingIntent.getBroadcast(appContext, alarmId.toInt(), receiverIntent, pendingFlags)
+        val alarmManager = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmClockInfo = AlarmManager.AlarmClockInfo(timeInMillis, pendingIntent)
+        alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
     }
+
     private fun findNearestAlarm(calendar: Calendar, alarm: Alarm): Alarm {
         var daysSet = alarm.daysOfWeek
         if (daysSet.isEmpty()) daysSet = DaysOfWeek.fromByte(0b01111111)
@@ -95,25 +88,4 @@ class AlarmServiceImpl @Inject constructor(
         calendar.set(Calendar.DAY_OF_WEEK, nextDay)
         return AlarmUi(alarm).copy(invokeTimestamp = calendar.timeInMillis)
     }
-
-    private fun getAlarmInfoPendingIntent(): PendingIntent {
-        val alarmInfoIntent = Intent(appContext, MainActivity::class.java)
-        alarmInfoIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        val pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        return PendingIntent.getActivity(appContext, 0, alarmInfoIntent, pendingFlags)
-    }
-
-    private fun getAlarmActionPendingIntent(alarmRequestCode: Long): PendingIntent {
-        val alarmActionIntent = Intent(appContext, AlarmActivity::class.java)
-        alarmActionIntent.putExtra("requestCode", alarmRequestCode)
-        alarmActionIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        val pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        return PendingIntent.getActivity(
-            appContext,
-            alarmRequestCode.toInt(),
-            alarmActionIntent,
-            pendingFlags
-        )
-    }
-
 }
