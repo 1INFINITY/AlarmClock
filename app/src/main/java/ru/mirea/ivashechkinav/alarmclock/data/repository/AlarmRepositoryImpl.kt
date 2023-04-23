@@ -54,8 +54,8 @@ class AlarmRepositoryImpl @Inject constructor(
     override suspend fun getAlarmById(alarmId: Long) = withContext(Dispatchers.IO) {
         return@withContext alarmDao.findById(alarmId)
     }
-    override suspend fun getNextMinTimestamp(currentTimestamp: Long) = withContext(Dispatchers.IO) {
-        return@withContext alarmDao.getNextMinTimestamp(currentTimestamp)
+    override suspend fun getTimestampsFlow() = withContext(Dispatchers.IO) {
+        return@withContext alarmDao.getTimestampsFlow()
     }
 
     companion object {

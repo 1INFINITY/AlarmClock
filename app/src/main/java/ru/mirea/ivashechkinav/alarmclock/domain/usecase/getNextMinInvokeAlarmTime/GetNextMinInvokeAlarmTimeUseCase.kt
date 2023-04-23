@@ -1,5 +1,8 @@
 package ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.transform
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.domain.usecase.UseCaseSuspend
 import java.text.SimpleDateFormat
@@ -7,15 +10,23 @@ import java.util.*
 import javax.inject.Inject
 
 class GetNextMinInvokeAlarmTimeUseCase @Inject constructor(private val repositoryImpl: AlarmRepositoryImpl) :
-    UseCaseSuspend<Long, NextMinInvokeAlarmTimeResult?> {
-    override suspend fun execute(arg: Long): NextMinInvokeAlarmTimeResult? {
-        val nextTimestamp =
-            repositoryImpl.getNextMinTimestamp(currentTimestamp = arg) ?: return null
+    UseCaseSuspend<NextMinInvokeAlarmTimeArgs, Flow<NextMinInvokeAlarmTimeResult?>> {
+    override suspend fun execute(arg: NextMinInvokeAlarmTimeArgs): Flow<NextMinInvokeAlarmTimeResult?> {
+        val firstFlow = arg.currentTimestampFlow
+        val secondFlow = repositoryImpl.getTimestampsFlow()
+        return secondFlow.combine(firstFlow) { timestampList, currentTimestamp ->
+            val nextTimeStamp = getNextMinTimestamp(timestampList, currentTimestamp) ?: return@combine(null)
+            return@combine (
+                NextMinInvokeAlarmTimeResult(
+                    nextTime = parseTime(nextTimeStamp - currentTimestamp),
+                    nextDate = parseDate(nextTimeStamp)
+                )
+            )
+        }
+    }
 
-        return NextMinInvokeAlarmTimeResult(
-            nextTime = parseTime(nextTimestamp - arg),
-            nextDate = parseDate(nextTimestamp)
-        )
+    private fun getNextMinTimestamp(timestampList: List<Long>, currentTimestamp: Long): Long? {
+        return timestampList.sorted().find { it > currentTimestamp }
     }
 
     private fun parseTime(timestampDiff: Long): String {

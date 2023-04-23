@@ -20,5 +20,5 @@ interface AlarmRepository {
 
     suspend fun getAlarmById(alarmId: Long): Alarm
 
-    suspend fun getNextMinTimestamp(currentTimestamp: Long): Long?
+    suspend fun getTimestampsFlow(): Flow<List<Long>>
 }

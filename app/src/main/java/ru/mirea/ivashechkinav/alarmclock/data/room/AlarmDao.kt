@@ -3,6 +3,7 @@ package ru.mirea.ivashechkinav.alarmclock.data.room
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import ru.mirea.ivashechkinav.alarmclock.data.room.models.AlarmRoom
 
 @Dao
@@ -32,6 +33,7 @@ interface AlarmDao {
     @Query("SELECT * FROM alarms WHERE id = :alarmId")
     suspend fun findById(alarmId: Long): AlarmRoom
 
-    @Query("SELECT MIN(invokeTimestamp) FROM alarms WHERE invokeTimestamp > :currentTimestamp")
-    fun getNextMinTimestamp(currentTimestamp: Long): Long?
+    @Query("SELECT invokeTimestamp FROM alarms WHERE isEnable = 1")
+    fun getTimestampsFlow(): Flow<List<Long>>
+
 }

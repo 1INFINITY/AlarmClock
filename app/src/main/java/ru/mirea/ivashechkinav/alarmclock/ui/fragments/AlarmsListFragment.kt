@@ -15,12 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import ru.mirea.ivashechkinav.alarmclock.R
 import ru.mirea.ivashechkinav.alarmclock.data.repository.AlarmRepositoryImpl
 import ru.mirea.ivashechkinav.alarmclock.databinding.FragmentAlarmsListBinding
 import ru.mirea.ivashechkinav.alarmclock.domain.Alarm
 import ru.mirea.ivashechkinav.alarmclock.domain.DaysOfWeek
 import ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime.GetNextMinInvokeAlarmTimeUseCase
+import ru.mirea.ivashechkinav.alarmclock.domain.usecase.getNextMinInvokeAlarmTime.NextMinInvokeAlarmTimeArgs
 import ru.mirea.ivashechkinav.alarmclock.ui.adapters.AlarmPagingAdapter
 import ru.mirea.ivashechkinav.alarmclock.ui.AlarmServiceImpl
 import ru.mirea.ivashechkinav.alarmclock.ui.models.AlarmUi
@@ -81,23 +83,28 @@ class AlarmsListFragment : Fragment() {
     }
     private fun initHeader() {
         lifecycleScope.launchWhenStarted {
-            repeat(Int.MAX_VALUE) {
                 updateHeaderState()
-                delay(60 * 1000)
-            }
         }
     }
 
     private suspend fun updateHeaderState() {
-        val currentTimestamp = Calendar.getInstance().timeInMillis
-        val result = getNextMinInvokeAlarmTimeUseCase.execute(currentTimestamp)
-        if (result == null) {
-            binding.tvAlarmsState.text = "Следующего будильника нет"
-            binding.tvAlarmsStateTime.text = ""
-            return
+        val currentTimeStampFlow = flow {
+            repeat(Int.MAX_VALUE) {
+                emit(System.currentTimeMillis())
+                delay(UPDATE_TIME_INTERVAL)
+            }
         }
-        binding.tvAlarmsState.text = "Будильник через\n${result.nextTime}"
-        binding.tvAlarmsStateTime.text = result.nextDate
+        getNextMinInvokeAlarmTimeUseCase.execute(NextMinInvokeAlarmTimeArgs(
+            currentTimestampFlow = currentTimeStampFlow
+        )).collect { result ->
+            if (result == null) {
+                binding.tvAlarmsState.text = "Следующего будильника нет"
+                binding.tvAlarmsStateTime.text = ""
+                return@collect
+            }
+            binding.tvAlarmsState.text = "Будильник через\n${result.nextTime}"
+            binding.tvAlarmsStateTime.text = result.nextDate
+        }
     }
 
     private fun initButtons() {
@@ -162,5 +169,8 @@ class AlarmsListFragment : Fragment() {
         }
         binding.recyclerViewAlarm.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewAlarm.adapter = adapter
+    }
+    companion object {
+        const val UPDATE_TIME_INTERVAL: Long = 60 * 1000
     }
 }
