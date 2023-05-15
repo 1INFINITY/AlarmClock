@@ -55,11 +55,13 @@ class AlarmServiceImpl @Inject constructor(
             alarmStart(alarmId, editedAlarm.invokeTimestamp)
         }
     }
+
     private fun alarmStart(alarmId: Long, timeInMillis: Long) {
         val receiverIntent = Intent(appContext, AlarmReceiver::class.java)
         receiverIntent.putExtra("alarmId", alarmId)
         val pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        val pendingIntent = PendingIntent.getBroadcast(appContext, alarmId.toInt(), receiverIntent, pendingFlags)
+        val pendingIntent =
+            PendingIntent.getBroadcast(appContext, alarmId.toInt(), receiverIntent, pendingFlags)
         val alarmManager = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmClockInfo = AlarmManager.AlarmClockInfo(timeInMillis, pendingIntent)
         alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
@@ -88,5 +90,49 @@ class AlarmServiceImpl @Inject constructor(
         }
         calendar.set(Calendar.DAY_OF_WEEK, nextDay)
         return AlarmUi(alarm).copy(invokeTimestamp = calendar.timeInMillis)
+    }
+
+    private fun findNearestAlarm2(alarm: Alarm): Alarm {
+        val daysSet = alarm.daysOfWeek
+        var nextTimestamp = alarm.invokeTimestamp
+        val alarmCalendar = Calendar.getInstance()
+        val currentDay = alarmCalendar.get(Calendar.DAY_OF_WEEK)
+        alarmCalendar.timeInMillis = alarm.invokeTimestamp
+        val currentAlarmDay = alarmCalendar.get(Calendar.DAY_OF_WEEK)
+
+        if (daysSet.isEmpty()) {
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR, alarmCalendar.get(Calendar.HOUR))
+            calendar.set(Calendar.MINUTE, alarmCalendar.get(Calendar.MINUTE))
+            calendar.set(Calendar.SECOND, alarmCalendar.get(Calendar.SECOND))
+            //calendar.set(Calendar.MILLISECOND, alarmCalendar.get(Calendar.MILLISECOND))
+            nextTimestamp = calendar.timeInMillis + 24 * 3600 * 1000
+            return AlarmUi(alarm).copy(invokeTimestamp = nextTimestamp)
+        }
+
+        val currentDayName = DaysOfWeek.fromInt(currentDay)
+        val nextDay = daysSet.find {
+            it.value > currentDayName.value
+        }
+            ?: daysSet.first()
+
+        val daysDifference = nextDay.toInt() - currentAlarmDay
+        nextTimestamp +=
+            if (daysDifference >= 0)
+                daysDifference * 24 * 3600 * 1000
+            else
+                if (currentDay < nextDay.toInt())
+                    daysDifference * 24 * 3600 * 1000
+                else
+                    (7 + daysDifference) * 24 * 3600 * 1000
+        return AlarmUi(alarm).copy(invokeTimestamp = nextTimestamp)
+    }
+
+    override fun selectAlarmDays(alarmId: Long, selectedDays: EnumSet<DaysOfWeek>) {
+        GlobalScope.launch {
+            val alarm = repository.getAlarmById(alarmId).copy(daysOfWeek = selectedDays)
+            val nearestAlarm = findNearestAlarm2(alarm = alarm)
+            repository.updateAlarm(nearestAlarm)
+        }
     }
 }

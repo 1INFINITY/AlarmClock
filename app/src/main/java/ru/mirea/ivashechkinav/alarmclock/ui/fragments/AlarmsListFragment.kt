@@ -127,6 +127,7 @@ class AlarmsListFragment : Fragment() {
                 Log.d(this@AlarmsListFragment::class.simpleName, "Вызвана функция ${object{}.javaClass.enclosingMethod?.name}")
                 lifecycleScope.launchWhenStarted {
                     repositoryImpl.updateAlarm((alarm as AlarmUi).copy(isEnable = !alarm.isEnable))
+                    alarmServiceImpl.alarmSwitch(alarm.id!!)
                 }
             }
 
@@ -138,9 +139,8 @@ class AlarmsListFragment : Fragment() {
             }
 
             override fun onToggleCheckBoxes(alarm: Alarm, selectedDays: EnumSet<DaysOfWeek>) {
-                val newAlarm = (alarm as AlarmUi).copy(daysOfWeek = selectedDays)
                 lifecycleScope.launchWhenStarted {
-                    repositoryImpl.updateAlarm(newAlarm)
+                    alarmServiceImpl.selectAlarmDays(alarmId = alarm.id!!, selectedDays = selectedDays)
                 }
             }
 
